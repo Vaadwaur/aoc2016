@@ -3,67 +3,25 @@
 
 namespace aoc2017 {
 
-void
-move_left(char& button) {
-	switch (button) {
-	case 2:
-	case 3:
-	case 5:
-	case 6:
-	case 8:
-	case 9:
-		button -= 1;
-		break;
-	}
-}
-
-void move_right(char& button) {
-	switch (button) {
-	case 1:
-	case 2:
-	case 4:
-	case 5:
-	case 7:
-	case 8:
-		button += 1;
-		break;
-	}
-}
-
-void move_up(char& button) {
-	if (button >= 4 && button <= 9) {
-		button -= 3;
-	}
-}
-
-void move_down(char& button) {
-	if (button >= 1 && button <= 6) {
-		button += 3;
-	}
-}
 std::string
 part1(std::istream& is_)
 {
+	std::map<char, std::array<char, 9>> lookup = {
+		{'D', {3,4,5,6,7,8,6,7,8}},
+		{'L', {0,0,1,3,3,4,6,6,7}},
+		{'R', {1,2,2,4,5,5,7,8,8}},
+		{'U', {0,1,2,0,1,2,3,4,5}}
+	};
 	std::string code;
-	char button{5};
 	char instruction;
+	char cur_pos{4};
 	while (is_.get(instruction)) {
 		switch (instruction) {
-		case 'L':
-			move_left(button);
-			break;
-		case 'R':
-			move_right(button);
-			break;
-		case 'U':
-			move_up(button);
-			break;
-		case 'D':
-			move_down(button);
-			break;
 		case '\n':
-			code += button + 0x30;
+			code += cur_pos + 0x31;
 			break;
+		default:
+			cur_pos = lookup[instruction][cur_pos];
 		}
 	}
 
