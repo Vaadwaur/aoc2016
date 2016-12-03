@@ -20,6 +20,7 @@ std::string day_to_string(eDay day)
 
 extern template void solve<kDay01>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay02>(bool, std::istream&, std::ostream&);
+extern template void solve<kDay03>(bool, std::istream&, std::ostream&);
 
 void run(eDay day, bool part1, std::ostream& os)
 {
@@ -31,6 +32,9 @@ void run(eDay day, bool part1, std::ostream& os)
 		break;
 	case kDay02:
 		solve<kDay02>(part1, is, os);
+		break;
+	case kDay03:
+		solve<kDay03>(part1, is, os);
 		break;
 	default:
 		return;
