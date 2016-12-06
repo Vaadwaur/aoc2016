@@ -28,7 +28,7 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 if(MSVC)
 	add_definitions(-DNOMINMAX)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /std:c++latest /permissive-")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /std:c++latest /permissive- /Oi /Ot")
 else(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++1z")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -g")

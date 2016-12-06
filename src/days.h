@@ -17,7 +17,7 @@ void solve(bool part1, std::istream& is, std::ostream& os)
 {
 	os << " part " << (part1 ? '1' : '2') << " is not implemented";
 	if (!is.bad()) {
-		os << " and input file does not exist" << std::endl;
+		os << " and input file does not exist\n";
 	}
 }
 

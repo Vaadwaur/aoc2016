@@ -1,3 +1,4 @@
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -6,7 +7,8 @@
 
 namespace aoc2017 {
 
-std::string day_to_string(eDay day)
+std::string
+day_to_string(eDay day)
 {
 	static const std::array<std::string, kNUM_DAYS> kDayLookup {
 		"day01", "day02", "day03", "day04", "day05", "day06", "day07",
@@ -23,10 +25,16 @@ extern template void solve<kDay02>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay03>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay04>(bool, std::istream&, std::ostream&);
 
-void run(eDay day, bool part1, std::ostream& os)
+uint64_t
+run(eDay day, bool part1, std::ostream& os)
 {
+	using std::chrono::duration_cast;
+	using std::chrono::microseconds;
+	using std::chrono::high_resolution_clock;
+
 	std::string filename{ "./input/" + day_to_string(day) + ".txt" };
 	std::ifstream is{filename};
+	auto start_time = high_resolution_clock::now();
 	switch (day) {
 	case kDay01:
 		solve<kDay01>(part1, is, os);
@@ -41,29 +49,47 @@ void run(eDay day, bool part1, std::ostream& os)
 		solve<kDay04>(part1, is, os);
 		break;
 	default:
-		return;
+		return 0;
 	}
+	auto diff_time = std::chrono::duration_cast<microseconds>(high_resolution_clock::now() - start_time);
 	os << '\n';
+
+	return diff_time.count();
 }
 
 } // namespace aoc2017
 
+void
+print_duration(std::ostream& _os, uint64_t const microseconds)
+{
+	if (microseconds > 0) {
+		_os << "\tElapsed time:" << microseconds / 1.0e6 << "s\n";
+	}
+}
 
-int main(int _argc, char** _argv)
+int
+main(int _argc, char** _argv)
 {
 	using namespace aoc2017;
 	std::regex filter{".*"};
 	if (_argc > 1) {
 		filter = std::regex{_argv[1]};
 	}
+	uint64_t total_time{};
 	for(int day{kFIRST_DAY}; day != kNUM_DAYS; ++day) {
 		eDay solver { static_cast<eDay>(day) };
 		if (!std::regex_search(day_to_string(solver), filter)) {
 			continue;
 		}
-		run(solver, true, std::cout);
-		run(solver, false, std::cout);
+		auto duration1 = run(solver, true, std::cout);
+		print_duration(std::cout, duration1);
+		auto duration2 = run(solver, false, std::cout);
+		print_duration(std::cout, duration2);
+
+		total_time += duration1 + duration2;
 	}
+
+	std::cout << "\nTotal elapsed time:" << total_time / 1.0e6 << "s\n";
 
 	return EXIT_SUCCESS;
 }
