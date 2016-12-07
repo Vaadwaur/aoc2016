@@ -26,6 +26,7 @@ extern template void solve<kDay03>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay04>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay05>(bool, std::istream&, std::ostream&);
 extern template void solve<kDay06>(bool, std::istream&, std::ostream&);
+extern template void solve<kDay07>(bool, std::istream&, std::ostream&);
 
 uint64_t
 run(eDay day, bool part1, std::ostream& os)
@@ -55,6 +56,9 @@ run(eDay day, bool part1, std::ostream& os)
 		break;
 	case kDay06:
 		solve<kDay06>(part1, is, os);
+		break;
+	case kDay07:
+		solve<kDay07>(part1, is, os);
 		break;
 	default:
 		return 0;
