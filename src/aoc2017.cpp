@@ -20,53 +20,54 @@ day_to_string(eDay day)
 	return kDayLookup[day];
 }
 
-extern template void solve<kDay01>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay02>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay03>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay04>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay05>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay06>(bool, std::istream&, std::ostream&);
-extern template void solve<kDay07>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay01>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay02>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay03>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay04>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay05>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay06>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay07>(bool, std::istream&, std::ostream&);
+
+template<typename T>
+class ScopedTimer
+{
+	std::chrono::time_point<std::chrono::high_resolution_clock> start_;
+	uint64_t &time_;
+public:
+	ScopedTimer(uint64_t& time) : time_(time), start_(std::chrono::high_resolution_clock::now()) {}
+	~ScopedTimer() { time_ += std::chrono::duration_cast<T>(std::chrono::high_resolution_clock::now() - start_).count(); }
+};
 
 uint64_t
 run(eDay day, bool part1, std::ostream& os)
 {
-	using std::chrono::duration_cast;
-	using std::chrono::microseconds;
-	using std::chrono::high_resolution_clock;
-
 	std::string filename{ "./input/" + day_to_string(day) + ".txt" };
 	std::ifstream is{filename};
-	auto start_time = high_resolution_clock::now();
+		
+	std::string(*func)(bool, std::istream&, std::ostream&);
 	switch (day) {
-	case kDay01:
-		solve<kDay01>(part1, is, os);
-		break;
-	case kDay02:
-		solve<kDay02>(part1, is, os);
-		break;
-	case kDay03:
-		solve<kDay03>(part1, is, os);
-		break;
-	case kDay04:
-		solve<kDay04>(part1, is, os);
-		break;
-	case kDay05:
-		solve<kDay05>(part1, is, os);
-		break;
-	case kDay06:
-		solve<kDay06>(part1, is, os);
-		break;
-	case kDay07:
-		solve<kDay07>(part1, is, os);
-		break;
+	case kDay01: func = &solve<kDay01>; break;
+	case kDay02: func = &solve<kDay02>; break;
+	case kDay03: func = &solve<kDay03>; break;
+	case kDay04: func = &solve<kDay04>; break;
+	case kDay05: func = &solve<kDay05>; break;
+	case kDay06: func = &solve<kDay06>; break;
+	case kDay07: func = &solve<kDay07>; break;
 	default:
-		return 0;
+		func = nullptr;
 	}
-	auto diff_time = std::chrono::duration_cast<microseconds>(high_resolution_clock::now() - start_time);
-	os << '\n';
+	uint64_t time{};
+	std::string result;
+	if (func != nullptr) {
+		os << day_to_string(day) << ":part" << (part1 ? '1' : '2') << ':';
+		{
+			ScopedTimer<std::chrono::microseconds> timer(time);
+			result = func(part1, is, os);
+		}
+		os << result << '\n';
+	}
 
-	return diff_time.count();
+	return time;
 }
 
 } // namespace aoc2017

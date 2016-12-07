@@ -14,7 +14,8 @@ constexpr bool check_triangle(unsigned side1, unsigned side2, unsigned side3)
 	return (side1 + side2) > side3;
 }
 
-auto part1(std::istream& _is)
+auto
+part1(std::istream& _is)
 {
 	unsigned nValid{};
 	std::string line;
@@ -40,7 +41,8 @@ auto part1(std::istream& _is)
 	return nValid;
 }
 
-auto part2(std::istream& _is)
+auto
+part2(std::istream& _is)
 {
 	std::string line;
 	std::array<unsigned, 3> tri;
@@ -84,15 +86,10 @@ auto part2(std::istream& _is)
 	return nValid;
 }
 
-template<> void solve<kDay03>(bool _part1, std::istream& _is, std::ostream& _os)
+template<> std::string
+solve<kDay03>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	_os << "day03:";
-	if (_part1) {
-		_os << "part1:" << part1(_is);
-	}
-	else {
-		_os << "part2:" << part2(_is);
-	}
+	return std::to_string(_part1 ? part1(_is) : part1(_is));
 }
 
 } // namespace aoc2017

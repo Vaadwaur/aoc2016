@@ -71,15 +71,10 @@ part2(std::istream& is_)
 }
 
 
-template<> void solve<kDay02>(bool part1_, std::istream& is_, std::ostream& os_)
+template<> std::string
+solve<kDay02>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	os_ << "day02:";
-	if(part1_) {
-		os_ << "part1:" << part1(is_);
-	}
-	else {
-		os_ << "part2:" << part2(is_);
-	}
+	return _part1 ? part1(_is) : part2(_is);
 }
 
 } // namespace aoc2017

@@ -13,12 +13,14 @@ enum eDay {
 };
 
 template <eDay DAY>
-void solve(bool part1, std::istream& is, std::ostream& os)
+std::string solve(bool part1, std::istream& is, std::ostream& os)
 {
 	os << " part " << (part1 ? '1' : '2') << " is not implemented";
 	if (!is.bad()) {
 		os << " and input file does not exist\n";
 	}
+
+	return "";
 }
 
 } // namespace aoc2017

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <experimental/filesystem>
 #include <set>
 #include "position.h"
 #include "direction.h"
@@ -133,20 +132,14 @@ part2(std::istream& file)
 }
 
 
-template<> void solve<kDay01>(bool _part1, std::istream& _is, std::ostream& _os)
+template<> std::string
+solve<kDay01>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	Position pos;
-	_os << "day01:";
-	if(_part1) {
-		_os << "part1:";
-		pos = part1(_is);
-	}
-	else {
-		_os << "part2:";
-		pos = part2(_is);
-	}
-	auto distance = pos.x + pos.y;
-	_os << distance << " {" << pos.x << ',' << pos.y << '}';
+	Position pos = _part1 ? part1(_is) : part2(_is);
+
+	_os << (pos.x + pos.y) << " {" << pos.x << ',' << pos.y << '}';
+
+	return "";
 }
 
 } // namespace aoc2017

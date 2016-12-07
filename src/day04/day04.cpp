@@ -126,23 +126,10 @@ part2(std::istream& _is)
 	return std::numeric_limits<tSectorId>::max();
 }
 
-template<> void
+template<> std::string
 solve<kDay04>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	_os << "day04:";
-	if (_part1) {
-		_os << "part1:" << part1(_is);
-	}
-	else {
-		_os << "part2:";
-		auto sector_id = part2(_is);
-		if (sector_id == std::numeric_limits<tSectorId>::max()) {
-			_os << "<room not found>";
-		}
-		else {
-			_os << "part2:" << sector_id;
-		}
-	}
+	return std::to_string(_part1 ? part1(_is) : part2(_is));
 }
 
 } // namespace aoc2017
