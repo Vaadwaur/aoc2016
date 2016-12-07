@@ -30,6 +30,11 @@ set(DAY05_SOURCE
 	"${DAY05_DIR}/md5.cpp" "${DAY05_DIR}/md5.h"
 )
 
+set(DAY06_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day06")
+set(DAY06_SOURCE
+	"${DAY06_DIR}/day06.cpp"
+)
+
 set(DAYS_SOURCE
 	"${CMAKE_CURRENT_SOURCE_DIR}/days.h"
 	"${DAY01_SOURCE}"
@@ -37,6 +42,7 @@ set(DAYS_SOURCE
 	"${DAY03_SOURCE}"
 	"${DAY04_SOURCE}"
 	"${DAY05_SOURCE}"
+	"${DAY06_SOURCE}"
 )
 add_executable(aoc2017 
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2017.cpp"
