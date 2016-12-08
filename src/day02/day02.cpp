@@ -1,5 +1,5 @@
-#include <days.h>
 #include <map>
+#include <days.h>
 
 namespace aoc2017 {
 

@@ -1,6 +1,4 @@
 #include <iostream>
-#include <string>
-#include <fstream>
 #include <set>
 #include "position.h"
 #include "direction.h"
