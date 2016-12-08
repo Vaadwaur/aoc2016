@@ -40,6 +40,15 @@ set(DAY07_SOURCE
 	"${DAY07_DIR}/day07.cpp"
 )
 
+set(DAY08_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day08")
+set(DAY08_SOURCE
+	"${DAY08_DIR}/day08.cpp"
+)
+option(WITH_DAY08_DISPLAY_PIXELS "Display result as pixels" OFF)
+if(WITH_DAY08_DISPLAY_PIXELS)
+	add_definitions(-DDAY08_DISPLAY_PIXELS)
+endif()
+
 set(DAYS_SOURCE
 	"${CMAKE_CURRENT_SOURCE_DIR}/days.h"
 	"${DAY01_SOURCE}"
@@ -49,6 +58,7 @@ set(DAYS_SOURCE
 	"${DAY05_SOURCE}"
 	"${DAY06_SOURCE}"
 	"${DAY07_SOURCE}"
+	"${DAY08_SOURCE}"
 )
 add_executable(aoc2017 
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2017.cpp"
