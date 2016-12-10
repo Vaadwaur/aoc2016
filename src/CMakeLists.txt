@@ -49,6 +49,11 @@ if(WITH_DAY08_DISPLAY_PIXELS)
 	add_definitions(-DDAY08_DISPLAY_PIXELS)
 endif()
 
+set(DAY09_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day09")
+set(DAY09_SOURCE
+	"${DAY09_DIR}/day09.cpp"
+)
+
 set(DAYS_SOURCE
 	"${CMAKE_CURRENT_SOURCE_DIR}/days.h"
 	"${DAY01_SOURCE}"
@@ -59,6 +64,7 @@ set(DAYS_SOURCE
 	"${DAY06_SOURCE}"
 	"${DAY07_SOURCE}"
 	"${DAY08_SOURCE}"
+	"${DAY09_SOURCE}"
 )
 add_executable(aoc2017 
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2017.cpp"
