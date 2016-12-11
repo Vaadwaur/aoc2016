@@ -1,6 +1,4 @@
-#include <cassert>
 #include <map>
-#include <queue>
 #include <regex>
 #include <set>
 #include <days.h>
@@ -82,8 +80,7 @@ part1(std::istream& _is)
 			}
 			else if (std::regex_match(instruction, matches, receive_re)) {
 				// value x goes to bot y
-				auto inserted = is_done.insert(instr_nr);
-				assert(inserted.second == true);
+				is_done.insert(instr_nr);
 				auto value = std::stoi(matches[1]);
 				auto bot = std::stoi(matches[2]);
 				auto target = bots.insert({ bot, {} }).first;

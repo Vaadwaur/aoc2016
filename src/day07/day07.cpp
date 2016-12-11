@@ -30,9 +30,8 @@ contains_abba(std::string_view const view)
 static auto
 part1(std::istream& _is)
 {
-	std::string line;
 	size_t counter{};
-	while (std::getline(_is, line)) {
+	for (std::string line; std::getline(_is, line);) {
 		counter += contains_abba(line);
 	}
 
@@ -79,9 +78,8 @@ find_bab(std::string_view const view, char a, char b)
 static auto
 part2(std::istream& _is)
 {
-	std::string line;
 	size_t counter{};
-	while (std::getline(_is, line)) {
+	for (std::string line; std::getline(_is, line);) {
 		auto all_aba_found = find_aba(line);
 		for (auto const aba : all_aba_found) {
 			if (find_bab(line, aba[0], aba[1])) {
@@ -90,6 +88,7 @@ part2(std::istream& _is)
 			}
 		}
 	}
+
 	return counter;
 }
 

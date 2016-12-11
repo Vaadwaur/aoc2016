@@ -22,10 +22,9 @@ decompress(std::string_view const view)
 static auto
 part1(std::istream& _is)
 {
-	std::string line;
 	uint64_t counter{};
 	uint64_t move_size;
-	while (std::getline(_is, line)) {
+	for (std::string line; std::getline(_is, line);) {
 		for (size_t i{}; i < line.length(); i += move_size) {
 			if (line[i] == '(') {
 				uint64_t result_size;
@@ -46,7 +45,7 @@ get_marker(std::string marker)
 {
 	auto it = std::sregex_iterator(marker.begin(), marker.end(), marker_re);
 	std::smatch match = *it;
-	return{ std::stoul(match[1]), std::stoul(match[2]) };
+	return {std::stoul(match[1]), std::stoul(match[2])};
 }
 
 static uint64_t
@@ -81,15 +80,11 @@ static auto
 part2(std::istream& _is)
 {
 	std::string data, marker;
-	{
-		std::string line;
-		while (std::getline(_is, line)) {
-			data += line;
-		}
+	for (std::string line; std::getline(_is, line);) {
+		data += line;
 	}
-	auto size = decompress2(data);
 
-	return size;
+	return decompress2(data);
 }
 
 template<> std::string
