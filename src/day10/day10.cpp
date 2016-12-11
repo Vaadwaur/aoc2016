@@ -1,94 +1,109 @@
 #include <map>
 #include <regex>
-#include <set>
 #include <days.h>
 
 namespace aoc2017 {
 
-using tBotValue = int;
-using tBotValues = std::vector<tBotValue>;
-using tOutput = int;
-using tOutputs = std::map<tOutput,tBotValues>;
+using tOutputId = int;
 
-static const std::regex give_re{R"(^bot (\d+) gives low to (bot|output) (\d+) and high to (output|bot) (\d+)$)"};
-static const std::regex receive_re{R"(^value (\d+) goes to bot (\d+)$)"};
+enum TargetType { kBot, kOutput };
+
+struct Target
+{
+	TargetType type;
+	tOutputId id;
+};
+
+struct Instruction
+{
+	static TargetType GetType(std::string const& str) {
+		return (str == "bot") ? kBot : kOutput;
+	}
+	std::array<Target, 2> targets;
+};
+
+using tMicrochip = int;
+using tMicrochips = std::vector<tMicrochip>;
+
+using tOutputs = std::map<tOutputId, tMicrochips>;
+using tBotInstructions = std::map<tOutputId, Instruction>;
+using tTask = std::pair<tOutputId, tMicrochips>;
+using tTasks = std::vector<tTask>;
 
 tOutputs::mapped_type goal{ 17,61 };
 
 static auto
-part1(std::istream& _is)
+read_instructions(std::istream& _is)
 {
-	tOutputs bots;
-	tOutputs outputs;
-	std::vector<std::string> instructions;
+	static const std::regex give_re{ R"(^bot (\d+) gives low to (bot|output) (\d+) and high to (output|bot) (\d+)$)" };
+	static const std::regex receive_re{ R"(^value (\d+) goes to bot (\d+)$)" };
 
-	std::string line;
+	tBotInstructions instr;
 	std::smatch matches;
-	while (std::getline(_is, line)) {
-		instructions.push_back(line);
+	tTasks tasks;
+	tOutputs bots;
+	for (std::string line; std::getline(_is, line); ) {
+		if (std::regex_match(line, matches, give_re)) {
+			// bot x gives low to bot y and high to bot z
+			tOutputId bot_id = std::stoi(matches[1]);
+			Instruction in{
+				Instruction::GetType(matches[2]), std::stoi(matches[3]),
+				Instruction::GetType(matches[4]), std::stoi(matches[5])
+			};
+			instr.emplace(bot_id, in);
+		}
+		else if (std::regex_match(line, matches, receive_re)) {
+			int bot_id = std::stoi(matches[2]);
+			auto &bot = bots[bot_id];
+			bot.push_back(std::stoi(matches[1]));
+			std::sort(std::begin(bot), std::end(bot));
+			if (bot.size() == 2) {
+				tasks.emplace_back(bot_id, bot);
+			}
+		}
 	}
-	std::set<size_t> is_done;
-	while(is_done.size() < instructions.size()) {
-		size_t instr_nr{};
-		for (auto& instruction : instructions) {
-			++instr_nr;
-			if (std::cend(is_done) != is_done.find(instr_nr)) {
-				continue;
-			}
 
-			if (std::regex_match(instruction, matches, give_re)) {
-				// bot x gives low to bot y and high to bot z
-				auto bot = std::stoi(matches[1]);
-				auto giver = bots.find(bot);
-				// bot doesn't yet have two values and hence cannot execute his instruction
-				if (giver == std::cend(bots) || giver->second.size() != 2) {
-					continue;
-				}
+	return std::make_tuple(instr, bots, tasks);
+}
 
-				// give away low value
-				auto value = giver->second[0];
-				auto target = std::stoi(matches[3]);
-				if (matches[2] == "output") {
-					auto target_output = outputs.insert({ target, {} }).first;
-					target_output->second.push_back(value);
-				}
-				else {
-					auto target_bot = bots.insert({ target, {} }).first;
-					target_bot->second.push_back(value);
-					std::sort(target_bot->second.begin(), target_bot->second.end());
-					if (target_bot->second == goal) {
-						return target;
-					}
-				}
+static auto
+GetOutput(Target& target, tOutputs& bots, tOutputs& outputs) {
+	//tOutputs::value_type output;
+	switch (target.type) {
+	case TargetType::kBot:
+		return bots[target.id];
+		break;
+	default:
+		return outputs[target.id];
+		break;
+	}
+}
 
-				// give away high value
-				value = giver->second[1];
-				target = std::stoi(matches[5]);
-				if (matches[4] == "output") {
-					auto target_output = outputs.insert({ target, {} }).first;
-					target_output->second.push_back(value);
-				}
-				else {
-					auto target_bot = bots.insert({ target, {} }).first;
-					target_bot->second.push_back(value);
-					std::sort(target_bot->second.begin(), target_bot->second.end());
-					if (target_bot->second == goal) {
-						return target;
-					}
-				}
-				is_done.insert(instr_nr);
-			}
-			else if (std::regex_match(instruction, matches, receive_re)) {
-				// value x goes to bot y
-				is_done.insert(instr_nr);
-				auto value = std::stoi(matches[1]);
-				auto bot = std::stoi(matches[2]);
-				auto target = bots.insert({ bot, {} }).first;
-				target->second.push_back(value);
-				std::sort(target->second.begin(), target->second.end());
-				if (target->second == goal) {
-					return bot;
-				}
+static auto
+part1(tBotInstructions const& instr, tOutputs& bots, tTasks& tasks)
+{
+	tOutputs outputs;
+	while(!tasks.empty()) {
+		auto task = tasks.back();
+		tasks.pop_back();
+
+		auto& task_chips = task.second;
+		if (task_chips.size() != 2) {
+			continue;
+		}
+		auto task_bot = task.first;
+		if(task_chips == goal) {
+			return task_bot;
+		}
+
+		auto instruction = instr.find(task_bot)->second; // get instruction for current tasks bot
+		for (size_t i{}; i < instruction.targets.size(); ++i) {
+			auto target = instruction.targets[i];
+			auto output = GetOutput(target, bots, outputs);
+			output.push_back(task_chips[i]);
+			std::sort(std::begin(output), std::end(output));
+			if (target.type == kBot && task_chips.size() == 2) {
+				tasks.push_back({ instruction.targets[i].id, output });
 			}
 		}
 	}
@@ -97,88 +112,42 @@ part1(std::istream& _is)
 }
 
 static auto
-part2(std::istream& _is)
+part2(tBotInstructions const& instr, tOutputs& bots, tTasks& tasks)
 {
-	tOutputs bots;
 	tOutputs outputs;
-	std::vector<std::string> instructions;
+	while(!tasks.empty()) {
+		auto task = tasks.back();
+		tasks.pop_back();
 
-	std::string line;
-	std::smatch matches;
-	while (std::getline(_is, line)) {
-		instructions.push_back(line);
-	}
-	std::set<size_t> is_done;
-	while(is_done.size() < instructions.size()) {
-		size_t instr_nr{};
-		for (auto& instruction : instructions) {
-			++instr_nr;
-			if (std::cend(is_done) != is_done.find(instr_nr)) {
-				continue;
-			}
+		auto& task_chips = task.second;
+		if (task_chips.size() != 2) {
+			continue;
+		}
 
-			if (std::regex_match(instruction, matches, give_re)) {
-				// bot x gives low to bot y and high to bot z
-				auto bot = std::stoi(matches[1]);
-				auto giver = bots.find(bot);
-				// bot doesn't yet have two values and hence cannot execute his instruction
-				if (giver == std::cend(bots) || giver->second.size() != 2) {
-					continue;
-				}
-
-				// give away low value
-				auto value = giver->second[0];
-				auto target = std::stoi(matches[3]);
-				if (matches[2] == "output") {
-					auto target_output = outputs.insert({ target, {} }).first;
-					target_output->second.push_back(value);
-				}
-				else {
-					auto target_bot = bots.insert({ target, {} }).first;
-					target_bot->second.push_back(value);
-					std::sort(target_bot->second.begin(), target_bot->second.end());
-				}
-
-				// give away high value
-				value = giver->second[1];
-				target = std::stoi(matches[5]);
-				if (matches[4] == "output") {
-					auto target_output = outputs.insert({ target, {} }).first;
-					target_output->second.push_back(value);
-				}
-				else {
-					auto target_bot = bots.insert({ target, {} }).first;
-					target_bot->second.push_back(value);
-					std::sort(target_bot->second.begin(), target_bot->second.end());
-				}
-
-				is_done.insert(instr_nr);
-			}
-			else if (std::regex_match(instruction, matches, receive_re)) {
-				// value x goes to bot y
-				is_done.insert(instr_nr);
-				auto value = std::stoi(matches[1]);
-				auto bot = std::stoi(matches[2]);
-				auto target = bots.insert({ bot, {} }).first;
-				target->second.push_back(value);
-				std::sort(target->second.begin(), target->second.end());
-				if (target->second == goal) {
-					return bot;
-				}
+		auto task_bot = task.first;
+		auto instruction = instr.find(task_bot)->second; // get instruction for current tasks bot
+		for (size_t i{}; i < instruction.targets.size(); ++i) {
+			auto target = instruction.targets[i];
+			auto output = GetOutput(target, bots, outputs);
+			output.push_back(task_chips[i]);
+			std::sort(std::begin(output), std::end(output));
+			if (target.type == kBot && task_chips.size() == 2) {
+				tasks.push_back({ instruction.targets[i].id, output });
 			}
 		}
 	}
 
-	auto out0 = outputs[0][0];
-	auto out1 = outputs[1][0];
-	auto out2 = outputs[2][0];
-	return out0 * out1 * out2;
+	return outputs[0][0] * outputs[1][0] * outputs[2][0];
 }
 
 template<> std::string
 solve<kDay10>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	return std::to_string(_part1 ? part1(_is) : part2(_is));
+	tBotInstructions instr;
+	tOutputs bots;
+	tTasks tasks;
+	std::tie(instr, bots, tasks) = read_instructions(_is);
+	return std::to_string(_part1 ? part1(instr, bots, tasks) : part2(instr, bots, tasks));
 }
 
 } // namespace aoc2017
