@@ -3,92 +3,63 @@
 
 namespace aoc2016 {
 
-static auto
-decompress(std::string_view const view)
-{
-	static const std::regex marker_re{R"(^(\d+)x(\d+))"};
-	auto pos = view.find_first_of(")");
-	uint64_t counter{pos + 1};
-	std::string marker(view.data() + 1, pos - 1);
-	auto it = std::sregex_iterator(marker.begin(), marker.end(), marker_re);
-	std::smatch match = *it;
-	auto num_chars = std::stoul(match[1]);
-	auto repeats = std::stoul(match[2]);
+static const std::regex marker_re{R"(\((\d+)x(\d+)\))", std::regex::optimize};
 
-	return std::make_pair(counter + num_chars, num_chars * repeats);
-}
-
-static auto
-part1(std::istream& _is)
+static uint64_t
+simple_decompress(std::string_view const view)
 {
-	uint64_t counter{};
-	uint64_t move_size;
-	for (std::string line; std::getline(_is, line);) {
-		for (size_t i{}; i < line.length(); i += move_size) {
-			if (line[i] == '(') {
-				uint64_t result_size;
-				std::tie(move_size, result_size) = decompress(std::string_view(line.data() + i));
-				counter += result_size;
-				continue;
-			}
-			move_size = 1;
-			++counter;
-		}
+	std::cmatch matches;
+	if (!std::regex_search(view.data(), view.data() + view.length(), matches, marker_re)) {
+		return view.length();
 	}
+	auto const marker_begin{matches.position()};
+	auto const marker_end{marker_begin + matches.length()};
+	auto const amount{std::stoul(matches[1])};
+	auto const repeats{std::stoul(matches[2])};
 
-	return counter;
-}
+	auto const size = simple_decompress(view.substr(marker_end + amount));
 
-std::string operator*(std::string_view const str, size_t repeats)
-{
-	std::string result;
-	result.reserve(repeats * str.length());
-	for (size_t i{}; i < repeats; ++i) {
-		result += str;
-	}
-
-	return result;
+	return size + marker_begin + amount * repeats;
 }
 
 static uint64_t
-decompress2(std::string_view view)
+part1(std::istream& _is)
 {
-	size_t marker_begin{};
-	if (std::string_view::npos == (marker_begin = view.find('('))) {
-		return view.size();
-	}
 	uint64_t counter{};
-	while (std::string_view::npos != (marker_begin = view.find('(', marker_begin))) {
-		decltype(view)::value_type const *p = view.data() + marker_begin;
-		counter += marker_begin;
-
-		size_t amount{}, repeat{};
-		while (*++p != 'x') {
-			amount = amount * 10 + (*p - '0');
-		}
-		while (*++p != ')') {
-			repeat = repeat * 10 + (*p - '0');
-		}
-
-		ptrdiff_t marker_end = p - view.data() + 1;
-		std::string substr{view.substr(marker_end, amount) * repeat};
-		counter += decompress2(substr);
-		view.remove_prefix(marker_end + amount);
-		marker_begin = 0;
+	for (std::string line; std::getline(_is, line);) {
+		counter += simple_decompress(line);
 	}
 
 	return counter;
 }
 
-static auto
+static uint64_t
+recursive_decompress(std::string_view const view)
+{
+	std::cmatch matches;
+	if (!std::regex_search(view.data(), view.data() + view.length(), matches, marker_re)) {
+		return view.length();
+	}
+	auto const marker_begin{matches.position()};
+	auto const marker_end{marker_begin + matches.length()};
+	auto const amount{std::stoul(matches[1])};
+	auto const repeats{std::stoul(matches[2])};
+
+	auto const recursive_size = recursive_decompress(view.substr(marker_end, amount));
+	auto const size = recursive_decompress(view.substr(marker_end + amount));
+
+	return size + recursive_size * repeats;
+}
+
+static uint64_t
 part2(std::istream& _is)
 {
-	std::string data;
+	uint64_t counter{};
 	for (std::string line; std::getline(_is, line);) {
-		data += line;
+		counter += recursive_decompress(line);
 	}
 
-	return decompress2(data);
+	return counter;
 }
 
 template<> std::string
