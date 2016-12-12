@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace aoc2017::md5 {
+namespace aoc2016::md5 {
 
 // usage: 1) feed it blocks of uchars with update()
 //      2) finalize()
@@ -50,4 +50,4 @@ private:
 
 std::string md5(std::string const& str);
 
-} // aoc2017::md5
+} // aoc2016::md5

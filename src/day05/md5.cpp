@@ -4,7 +4,7 @@
 
 //reference implemantion of RFC 1321
 
-namespace aoc2017::md5 {
+namespace aoc2016::md5 {
 
 // Constants for MD5Transform routine.
 static constexpr int const S11 = 7;
@@ -301,4 +301,4 @@ md5(std::string const& str)
 	return MD5(str).HexDigest();
 }
 
-} // namespace aoc2017::md5
+} // namespace aoc2016::md5

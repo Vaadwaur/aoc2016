@@ -2,7 +2,7 @@
 #include <utility>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 using tData = std::array<std::array<char, 26>, 8>;
 using tDataDataIt = tData::value_type::const_iterator;
@@ -62,4 +62,4 @@ solve<kDay06>(bool _part1, std::istream& _is, std::ostream& _os)
 	return _part1 ? part1(_is) : part2(_is);
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

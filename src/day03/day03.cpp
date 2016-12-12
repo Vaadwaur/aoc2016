@@ -4,7 +4,7 @@
 #include <vector>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 constexpr bool check_triangle(unsigned side1, unsigned side2, unsigned side3)
 {
@@ -89,4 +89,4 @@ solve<kDay03>(bool _part1, std::istream& _is, std::ostream& _os)
 	return std::to_string(_part1 ? part1(_is) : part1(_is));
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

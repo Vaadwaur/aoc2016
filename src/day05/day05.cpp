@@ -1,7 +1,7 @@
 #include <days.h>
 #include "md5.h"
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 static std::string
 part1(std::istream& _is, std::ostream& _os)
@@ -56,4 +56,4 @@ solve<kDay05>(bool _part1, std::istream& _is, std::ostream& _os)
 	return _part1 ? part1(_is, _os) : part2(_is, _os);
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

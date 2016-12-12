@@ -3,7 +3,7 @@
 #include <regex>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 static constexpr const size_t COLS = 50;
 static constexpr const size_t ROWS = 6;
@@ -162,4 +162,4 @@ solve<kDay08>(bool _part1, std::istream& _is, std::ostream& _os)
 	return _part1 ? std::to_string(part1(_is, display)) : part2(_is, _os, display);
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

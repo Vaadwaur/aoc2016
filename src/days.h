@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 enum eDay {
 	kFIRST_DAY = 0, kDay01 = 0, kDay02, kDay03, kDay04, kDay05, kDay06, kDay07,
@@ -23,4 +23,4 @@ std::string solve(bool part1, std::istream& is, std::ostream& os)
 	return "";
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

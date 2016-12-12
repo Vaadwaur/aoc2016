@@ -3,7 +3,7 @@
 #include <regex>
 #include "days.h"
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 std::string
 day_to_string(eDay day)
@@ -76,7 +76,7 @@ run(eDay day, bool part1, std::ostream& os)
 	return time;
 }
 
-} // namespace aoc2017
+} // namespace aoc2016
 
 void
 print_duration(std::ostream& _os, uint64_t const microseconds)
@@ -89,7 +89,7 @@ print_duration(std::ostream& _os, uint64_t const microseconds)
 int
 main(int _argc, char** _argv)
 {
-	using namespace aoc2017;
+	using namespace aoc2016;
 	std::regex filter{".*"};
 	if (_argc > 1) {
 		filter = std::regex{_argv[1]};

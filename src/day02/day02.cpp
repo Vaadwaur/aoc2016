@@ -1,7 +1,7 @@
 #include <map>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 std::string
 part1(std::istream& is_)
@@ -77,4 +77,4 @@ solve<kDay02>(bool _part1, std::istream& _is, std::ostream& _os)
 	return _part1 ? part1(_is) : part2(_is);
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

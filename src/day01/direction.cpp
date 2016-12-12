@@ -1,6 +1,6 @@
 #include "direction.h"
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 Direction
 operator--(Direction& dir)
@@ -47,4 +47,4 @@ operator++(Direction& dir)
 	return dir;
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

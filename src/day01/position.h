@@ -1,6 +1,6 @@
 #pragma once
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 struct Position
 {

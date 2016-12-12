@@ -1,7 +1,7 @@
 #include <regex>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 static auto
 decompress(std::string_view const view)
@@ -97,4 +97,4 @@ solve<kDay09>(bool _part1, std::istream& _is, std::ostream& _os)
 	return std::to_string(_part1 ? part1(_is) : part2(_is));
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

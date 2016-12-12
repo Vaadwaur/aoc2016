@@ -78,7 +78,7 @@ set(DAYS_SOURCE
 	"${DAY10_SOURCE}"
 	"${DAY11_SOURCE}"
 )
-add_executable(aoc2017 
-	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2017.cpp"
+add_executable(aoc2016 
+	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2016.cpp"
 	"${DAYS_SOURCE}"
 )

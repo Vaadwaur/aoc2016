@@ -4,7 +4,7 @@
 #include "direction.h"
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 Position
 follow_instruction(Direction const dir, std::string const& steps)
@@ -140,4 +140,4 @@ solve<kDay01>(bool _part1, std::istream& _is, std::ostream& _os)
 	return "";
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

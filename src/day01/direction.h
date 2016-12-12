@@ -1,6 +1,6 @@
 #pragma once
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 enum class Direction {
 	kEast, kNorth, kWest, kSouth
@@ -12,4 +12,4 @@ operator--(Direction& dir);
 Direction
 operator++(Direction& dir);
 
-} // namespace aoc2017
+} // namespace aoc2016

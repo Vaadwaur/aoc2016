@@ -4,7 +4,7 @@
 #include <vector>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 using tSectorId = uint64_t;
 
@@ -129,4 +129,4 @@ solve<kDay04>(bool _part1, std::istream& _is, std::ostream& _os)
 	return std::to_string(_part1 ? part1(_is) : part2(_is));
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

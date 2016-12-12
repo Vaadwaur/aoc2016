@@ -1,7 +1,7 @@
 #include <vector>
 #include <days.h>
 
-namespace aoc2017 {
+namespace aoc2016 {
 
 using tFloorMap = std::vector<char>;
 
@@ -59,4 +59,4 @@ solve<kDay11>(bool _part1, std::istream& _is, std::ostream& _os)
 	return std::to_string(answer);
 }
 
-} // namespace aoc2017
+} // namespace aoc2016

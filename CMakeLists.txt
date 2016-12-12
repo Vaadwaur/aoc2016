@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-set(PROJECT_NAME_STR aoc2017)
+set(PROJECT_NAME_STR aoc2016)
 project(${PROJECT_NAME_STR} CXX)
 # Common parameters for all subprojects stuff goes here
 
