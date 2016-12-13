@@ -69,6 +69,15 @@ set(DAY12_SOURCE
 	"${DAY12_DIR}/day12.cpp"
 )
 
+set(DAY13_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day13")
+set(DAY13_SOURCE
+	"${DAY13_DIR}/day13.cpp"
+)
+option(WITH_DAY13_SHOW_DUNGEON "Show dungeon" OFF)
+if(WITH_DAY13_SHOW_DUNGEON)
+	add_definitions(-DDAY13_SHOW_DUNGEON)
+endif()
+
 set(DAYS_SOURCE
 	"${CMAKE_CURRENT_SOURCE_DIR}/days.h"
 	"${DAY01_SOURCE}"
@@ -83,6 +92,7 @@ set(DAYS_SOURCE
 	"${DAY10_SOURCE}"
 	"${DAY11_SOURCE}"
 	"${DAY12_SOURCE}"
+	"${DAY13_SOURCE}"
 )
 add_executable(aoc2016 
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2016.cpp"
