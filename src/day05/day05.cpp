@@ -1,5 +1,5 @@
 #include <days.h>
-#include "md5.h"
+#include <utils/md5.h>
 
 namespace aoc2016 {
 

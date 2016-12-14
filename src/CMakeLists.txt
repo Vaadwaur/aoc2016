@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.6)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 
+set(UTILS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/utils")
+set(UTILS_SOURCE
+	"${UTILS_DIR}/md5.cpp" "${UTILS_DIR}/md5.h"
+)
+
 set(DAY01_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day01")
 set(DAY01_SOURCE
 	"${DAY01_DIR}/day01.cpp"
@@ -27,7 +32,7 @@ set(DAY04_SOURCE
 set(DAY05_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day05")
 set(DAY05_SOURCE
 	"${DAY05_DIR}/day05.cpp"
-	"${DAY05_DIR}/md5.cpp" "${DAY05_DIR}/md5.h"
+	"${UTILS_SOURCE}"
 )
 
 set(DAY06_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day06")
