@@ -32,6 +32,7 @@ extern template std::string solve<kDay11>(bool, std::istream&, std::ostream&);
 extern template std::string solve<kDay12>(bool, std::istream&, std::ostream&);
 extern template std::string solve<kDay13>(bool, std::istream&, std::ostream&);
 extern template std::string solve<kDay14>(bool, std::istream&, std::ostream&);
+extern template std::string solve<kDay15>(bool, std::istream&, std::ostream&);
 
 template<typename T>
 class ScopedTimer
@@ -65,6 +66,7 @@ run(eDay day, bool part1, std::ostream& os)
 	case kDay12: func = &solve<kDay12>; break;
 	case kDay13: func = &solve<kDay13>; break;
 	case kDay14: func = &solve<kDay14>; break;
+	case kDay15: func = &solve<kDay15>; break;
 	default:
 		func = nullptr;
 	}
