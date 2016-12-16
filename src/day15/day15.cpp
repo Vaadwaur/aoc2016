@@ -1,54 +1,63 @@
-#include <numeric>
+#include <regex>
 #include <days.h>
 
 namespace aoc2016 {
 
-static auto
-part1()
+struct Disc
 {
-	std::array<char, 6> positions{ 7, 13, 3, 5, 17, 19 };
-	std::array<char, 6> start{ 0, 0, 2, 2, 0, 7 };
-	std::array<bool, 6> result{};
+	char positions;
+	char start_pos;
+};
+
+using tDiscs = std::vector<Disc>;
+
+static uint64_t
+part1(tDiscs const& discs)
+{
 	uint64_t counter{};
-	bool succeeded{};
+	bool successful;
+	size_t const num_discs = discs.size();
 	do {
-		for (size_t i{}; i < positions.size(); ++i) {
-			result[i] = (counter + start[i] + i + 1) % positions[i] == 0;
+		successful = true;
+		for (size_t i{}; i < num_discs && successful; ++i) {
+			successful &= (counter + discs[i].start_pos + i + 1) % discs[i].positions == 0;
 		}
-		succeeded = std::accumulate(std::cbegin(result), std::cend(result), true, [](auto& init, auto const& val) {
-			return init && val;
-		});
+
 		++counter;
-	} while (!succeeded);
+	} while (!successful);
 
 	return counter - 1;
 }
 
 static auto
-part2()
+part2(tDiscs& discs)
 {
-	std::array<char, 7> positions{ 7, 13, 3, 5, 17, 19, 11 };
-	std::array<char, 7> start{ 0, 0, 2, 2, 0, 7, 0 };
-	std::array<bool, 7> result{};
-	uint64_t counter{};
-	bool succeeded{};
-	do {
-		for (size_t i{}; i < positions.size(); ++i) {
-			result[i] = (counter + start[i] + i + 1) % positions[i] == 0;
-		}
-		succeeded = std::accumulate(std::cbegin(result), std::cend(result), true, [](auto& init, auto const& val) {
-			return init && val;
-		});
-		++counter;
-	} while (!succeeded);
+	discs.push_back({ 11, 0 });
+	return part1(discs);
+}
 
-	return counter - 1;
+static auto
+read_input(std::istream& _is)
+{
+	tDiscs discs;
+	static std::regex const input_re{R"(^Disc #\d+ has (\d+) positions; at time=0, it is at position (\d+).$)", std::regex_constants::optimize};
+	std::smatch matches;
+	for (std::string line; std::getline(_is, line); ) {
+		if (std::regex_match(line, matches, input_re)) {
+			char num_positions = static_cast<char>(std::stoi(matches[1]));
+			char start_pos = static_cast<char>(std::stoi(matches[2]));
+			discs.push_back({num_positions, start_pos});
+		}
+	}
+
+	return discs;
 }
 
 template<> std::string
 solve<kDay15>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	return std::to_string(_part1 ? part1() : part2());
+	auto discs = read_input(_is);
+	return std::to_string(_part1 ? part1(discs) : part2(discs));
 }
 
 } // namespace aoc2016
