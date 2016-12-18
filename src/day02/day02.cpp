@@ -3,7 +3,7 @@
 
 namespace aoc2016 {
 
-std::string
+static std::string
 part1(std::istream& is_)
 {
 	std::map<char, std::array<char, 9>> lookup = {
@@ -22,14 +22,14 @@ part1(std::istream& is_)
 			break;
 		default:
 			cur_pos = lookup[instruction][cur_pos];
+			break;
 		}
 	}
 
 	return code;
 }
 
-
-std::string
+static std::string
 part2(std::istream& is_)
 {
 	std::map<char, std::array<char, 13>> lookup = {
@@ -69,7 +69,6 @@ part2(std::istream& is_)
 
 	return code;
 }
-
 
 template<> std::string
 solve<kDay02>(bool _part1, std::istream& _is, std::ostream& _os)

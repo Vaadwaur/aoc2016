@@ -40,24 +40,12 @@ get_data(std::string storage, size_t const storage_size)
 	return storage;
 }
 
-static std::string
-part1(std::istream& _is, std::string const& storage)
-{
-	return get_data(storage, 272);
-}
-
-static std::string
-part2(std::istream& _is, std::string const& storage)
-{
-	return get_data(storage, 35651584);
-}
-
 template<> std::string
 solve<kDay16>(bool _part1, std::istream& _is, std::ostream& _os)
 {
 	std::string storage;
 	_is >> storage;
-	return _part1 ? part1(_is, storage) : part2(_is, storage);
+	return _part1 ? get_data(storage, 272) : get_data(storage, 35651584);
 }
 
 } // namespace aoc2016

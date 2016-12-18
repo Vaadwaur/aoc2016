@@ -3,7 +3,11 @@
 
 namespace aoc2016 {
 
-static const std::regex marker_re{R"(\((\d+)x(\d+)\))", std::regex::optimize};
+namespace {
+
+std::regex const marker_re{R"(\((\d+)x(\d+)\))", std::regex::optimize};
+
+}
 
 static uint64_t
 simple_decompress(std::string_view const view)

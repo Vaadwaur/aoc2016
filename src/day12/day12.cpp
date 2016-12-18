@@ -1,59 +1,57 @@
 #include <cassert>
-#include <cstdlib>
 #include <vector>
 #include <days.h>
 
 namespace aoc2016 {
 
-
 namespace {
 
-	struct Instruction
-	{
-		enum Type {kCopyReg, kCopyVal, kJumpReg, kJumpVal, kInc, kDec};
-		Type type;
-		int op1;
-		int op2;
+struct Instruction
+{
+	enum Type {kCopyReg, kCopyVal, kJumpReg, kJumpVal, kInc, kDec};
+	Type type;
+	int op1;
+	int op2;
+};
 
-	};
+using tInstructions = std::vector<Instruction>;
 
-	using tInstructions = std::vector<Instruction>;
+struct CPU {
+	std::array<int, 4> regs;
+	int next;
 
-	struct CPU {
-		std::array<int, 4> regs;
-		int next;
-
-		void Execute(tInstructions const& program) {
-			Instruction const& in = program[next];
-			switch (in.type) {
-			case Instruction::kCopyReg:
-				regs[in.op2] = regs[in.op1];
-				break;
-			case Instruction::kCopyVal:
-				regs[in.op2] = in.op1;
-				break;
-			case Instruction::kJumpReg:
-				if (regs[in.op1] != 0) {
-					next += in.op2 - 1;
-				}
-				break;
-			case Instruction::kJumpVal:
-				if (in.op1 != 0) {
-					next += in.op2 - 1;
-				}
-				break;
-			case Instruction::kInc:
-				++regs[in.op1];
-				break;
-			case Instruction::kDec:
-				--regs[in.op1];
+	void Execute(tInstructions const& program) {
+		Instruction const& in = program[next];
+		switch (in.type) {
+		case Instruction::kCopyReg:
+			regs[in.op2] = regs[in.op1];
+			break;
+		case Instruction::kCopyVal:
+			regs[in.op2] = in.op1;
+			break;
+		case Instruction::kJumpReg:
+			if (regs[in.op1] != 0) {
+				next += in.op2 - 1;
 			}
-
-			++next;
+			break;
+		case Instruction::kJumpVal:
+			if (in.op1 != 0) {
+				next += in.op2 - 1;
+			}
+			break;
+		case Instruction::kInc:
+			++regs[in.op1];
+			break;
+		case Instruction::kDec:
+			--regs[in.op1];
+			break;
 		}
-	};
 
-}
+		++next;
+	}
+};
+
+} // anonymous internal namespace
 
 
 static auto

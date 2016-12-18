@@ -5,15 +5,20 @@
 
 namespace aoc2016 {
 
+namespace {
+
 using tBotValue = int;
 using tBotValues = std::vector<tBotValue>;
 using tOutput = int;
 using tOutputs = std::map<tOutput,tBotValues>;
 
-static const std::regex give_re{R"(^bot (\d+) gives low to (bot|output) (\d+) and high to (output|bot) (\d+)$)"};
-static const std::regex receive_re{R"(^value (\d+) goes to bot (\d+)$)"};
+std::regex const give_re{R"(^bot (\d+) gives low to (bot|output) (\d+) and high to (output|bot) (\d+)$)", std::regex_constants::optimize};
+std::regex const receive_re{R"(^value (\d+) goes to bot (\d+)$)", std::regex_constants::optimize};
 
 tOutputs::mapped_type goal{ 17,61 };
+
+} // anonymous internal namespace
+
 
 static auto
 part1(std::istream& _is)

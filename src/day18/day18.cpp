@@ -8,9 +8,11 @@ enum Symbols : char {SAFE = '.', TRAP = '^'};
 
 }
 
+
 static auto
 count_safe_tiles(std::istream& _is, std::string prev_row, uint64_t const kNumRows)
 {
+	// TODO: convert prev_row to binary and use __popcnt intrinsics to speed up
 	uint64_t safe_counter{};
 
 	// Pad with virtual safe rooms on left and right side.

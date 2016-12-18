@@ -10,10 +10,11 @@ namespace {
 
 constexpr unsigned char const X_SIZE = 4;
 constexpr unsigned char const Y_SIZE = 4;
-static std::string input;
-static constexpr const std::array<char, 4> PATH_LOOKUP{'U','D','L','R'};
+std::string input;
+constexpr std::array<char, 4> const PATH_LOOKUP{'U','D','L','R'};
 
 }
+
 
 using tDoorState = char;
 

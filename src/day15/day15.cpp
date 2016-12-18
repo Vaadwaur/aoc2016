@@ -3,6 +3,8 @@
 
 namespace aoc2016 {
 
+namespace {
+
 struct Disc
 {
 	char positions;
@@ -10,6 +12,9 @@ struct Disc
 };
 
 using tDiscs = std::vector<Disc>;
+
+}
+
 
 static uint64_t
 part1(tDiscs const& discs)

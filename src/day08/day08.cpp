@@ -5,13 +5,18 @@
 
 namespace aoc2016 {
 
-static constexpr const size_t COLS = 50;
-static constexpr const size_t ROWS = 6;
-static constexpr const size_t CHAR_WIDTH = 5;
-static constexpr const size_t CHAR_HEIGHT = ROWS;
-static constexpr const size_t NUM_CHARS = COLS / CHAR_WIDTH;
+namespace {
+
+constexpr const size_t COLS = 50;
+constexpr const size_t ROWS = 6;
+constexpr const size_t CHAR_WIDTH = 5;
+constexpr const size_t CHAR_HEIGHT = ROWS;
+constexpr const size_t NUM_CHARS = COLS / CHAR_WIDTH;
 using tDisplay = std::array<std::bitset<COLS>, ROWS>;
 using tDisplayChar = std::bitset<CHAR_WIDTH * CHAR_HEIGHT>;
+
+}
+
 
 static void
 rotate_row(tDisplay& display, char row, char amount)
@@ -140,7 +145,7 @@ translate_display(tDisplay display)
 	return answer;
 }
 
-static auto
+static std::string
 part2(std::istream& _is, std::ostream& _os, tDisplay& display)
 {
 	part1(_is, display);

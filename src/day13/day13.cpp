@@ -5,11 +5,14 @@
 namespace aoc2016 {
 
 namespace {
-	enum eRoomType { UNCHECKED = 0xfe, WALL = 0xff };
-	static constexpr const uint8_t ROOMS_X = 52;
-	static constexpr const uint8_t ROOMS_Y = 52;
-	static uint32_t puzzle_input;
+
+enum eRoomType { UNCHECKED = 0xfe, WALL = 0xff };
+constexpr uint8_t const ROOMS_X = 52;
+constexpr uint8_t const ROOMS_Y = 52;
+uint32_t puzzle_input;
+
 }
+
 
 template<typename T>
 constexpr T square(T const value)

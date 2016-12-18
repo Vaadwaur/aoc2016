@@ -3,7 +3,12 @@
 
 namespace aoc2016 {
 
+namespace {
+
 using tFloorMap = std::vector<char>;
+
+}
+
 
 static auto
 get_items(std::istream& _is)

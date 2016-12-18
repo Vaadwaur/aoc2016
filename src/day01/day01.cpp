@@ -6,7 +6,7 @@
 
 namespace aoc2016 {
 
-Position
+static Position
 follow_instruction(Direction const dir, std::string const& steps)
 {
 	Position pos{};
@@ -30,7 +30,7 @@ follow_instruction(Direction const dir, std::string const& steps)
 	return pos;
 }
 
-Position
+static Position
 follow_instruction(Direction const dir, std::string const& steps, Position& cur_pos, std::set<Position>& visited)
 {
 	auto nSteps = std::stoi(steps);
@@ -59,8 +59,7 @@ follow_instruction(Direction const dir, std::string const& steps, Position& cur_
 	} while (--nSteps > 0);
 }
 
-
-Position
+static Position
 part1(std::istream& file)
 {
 	char instruction;
@@ -83,6 +82,7 @@ part1(std::istream& file)
 			if (instruction >= '0' && instruction <= '9') {
 				steps += instruction;
 			}
+			break;
 		}
 	}
 	pos += follow_instruction(dir, steps);
@@ -90,8 +90,7 @@ part1(std::istream& file)
 	return pos;
 }
 
-
-Position
+static Position
 part2(std::istream& file)
 {
 	char instruction;
@@ -118,6 +117,7 @@ part2(std::istream& file)
 				if (instruction >= '0' && instruction <= '9') {
 					steps += instruction;
 				}
+				break;
 			}
 		}
 	}
@@ -128,7 +128,6 @@ part2(std::istream& file)
 
 	return pos;
 }
-
 
 template<> std::string
 solve<kDay01>(bool _part1, std::istream& _is, std::ostream& _os)

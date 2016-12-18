@@ -6,12 +6,13 @@
 
 namespace aoc2016 {
 
-constexpr bool check_triangle(unsigned side1, unsigned side2, unsigned side3)
+static constexpr bool
+check_triangle(unsigned side1, unsigned side2, unsigned side3)
 {
 	return (side1 + side2) > side3;
 }
 
-auto
+static auto
 part1(std::istream& _is)
 {
 	unsigned nValid{};
@@ -38,7 +39,7 @@ part1(std::istream& _is)
 	return nValid;
 }
 
-auto
+static auto
 part2(std::istream& _is)
 {
 	std::string line;

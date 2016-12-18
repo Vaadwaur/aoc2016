@@ -4,8 +4,13 @@
 
 namespace aoc2016 {
 
+namespace {
+
 using tData = std::array<std::array<char, 26>, 8>;
 using tDataDataIt = tData::value_type::const_iterator;
+
+}
+
 
 static tData
 get_data(std::istream& _is)

@@ -6,12 +6,17 @@
 
 namespace aoc2016 {
 
+namespace {
+
 using tSectorId = uint64_t;
+
+}
+
 
 static auto
 explode_room(std::string const& room)
 {
-	std::regex delimeters{R"([-\[\]])"};
+	static std::regex delimeters{R"([-\[\]])", std::regex_constants::optimize};
 	std::vector<std::string> tokens(
 		std::sregex_token_iterator(room.begin(), room.end(), delimeters, -1),
 		std::sregex_token_iterator());
@@ -63,7 +68,6 @@ calculate_room_checksum(std::string const& room_code)
 
 	return calculated_chksum;
 }
-
 
 static bool
 is_room_valid(std::string const& room_code, std::string const& checksum)
