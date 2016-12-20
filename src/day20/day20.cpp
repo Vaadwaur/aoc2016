@@ -6,16 +6,16 @@ namespace aoc2016 {
 
 namespace {
 
-using tBlockRange = std::pair<uint32_t, uint32_t>;
+using tBlockRange = std::pair<uint64_t, uint64_t>;
 using tBlockRanges = std::vector<tBlockRange>;
 
 }
 
-static uint32_t 
+static uint64_t 
 part1(tBlockRanges const& ranges)
 {
 	// ranges must be sorted
-	uint32_t counter{};
+	uint64_t counter{};
 	auto it = ranges.cbegin();
 	while (counter >= it->first) {
 		counter = std::max(counter, it->second + 1);
@@ -25,28 +25,39 @@ part1(tBlockRanges const& ranges)
 	return counter;
 }
 
-static uint32_t
-part2(tBlockRanges const& ranges)
+static tBlockRanges
+compress_ranges(tBlockRanges const& ranges)
 {
-	constexpr uint64_t const len = (uint64_t(1) << 32);
-
-	// vector<bool> requires 1/8th of the memory. If you can spare the memory,
-	// array of bool is much faster to execute than vector<bool>
-	//std::vector<bool> availability(len, true);
-	auto availability = std::make_unique<bool[]>(len);
-	std::fill_n(availability.get(), len, true);
-
+	tBlockRanges compressed;
 	for (auto const& range : ranges) {
-		for (uint64_t i{range.first}; i <= range.second; ++i) {
-			availability[i] = false;
+		bool merged{};
+		for (auto& comp : compressed) {
+			if (range.first >= comp.first && range.first <= (comp.second + 1)) {
+				comp.second = std::max(comp.second, range.second);
+				merged = true;
+				break;
+			}
+		}
+		if (!merged) {
+			compressed.push_back(range);
 		}
 	}
 
-	uint32_t counter{};
-	for (uint64_t i{}; i < len; ++i) {
-		if (availability[i]) {
-			++counter;
+	return compressed;
+}
+
+static uint64_t
+part2(tBlockRanges& ranges)
+{
+	// ranges must be sorted and compressed
+	ranges = compress_ranges(ranges);
+	uint64_t counter{};
+	tBlockRange prev{};
+	for (auto range : ranges) {
+		if (range.first > prev.second) {
+			counter += (range.first - prev.second) - 1;
 		}
+		prev = range;
 	}
 
 	return counter;
