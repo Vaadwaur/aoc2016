@@ -1,4 +1,3 @@
-#include <limits>
 #include <regex>
 #include <days.h>
 #include "scrambler.h"
@@ -28,9 +27,9 @@ get_instructions(std::istream& _is)
 }
 
 static std::string
-scramble(std::vector<std::string> const& instructions, std::string str)
+scramble(std::vector<std::string> const& instructions, std::string str, bool const reverse = false)
 {
-	Scrambler scrambler{str};
+	Scrambler scrambler{str, reverse};
 
 	std::smatch matches;
 	for (auto it = instructions.cbegin(); it != instructions.cend(); ++it) {
@@ -69,13 +68,8 @@ solve<kDay21>(bool _part1, std::istream& _is, std::ostream& _os)
 	}
 	else {
 		std::string const scrambled{"fbgdceah"};
-		std::string str, test{scrambled};
-		std::sort(std::begin(str), std::end(str));
-		do {
-			str = scramble(instructions, test);
-		} while (str != scrambled && std::next_permutation(std::begin(test), std::end(test)));
-		_os << "original=" << scrambled << ':';
-		return test;
+		std::reverse(std::begin(instructions), std::end(instructions));
+		return scramble(instructions, scrambled, true);
 	}
 }
 

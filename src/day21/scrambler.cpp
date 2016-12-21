@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <cassert>
 #include "scrambler.h"
 
 namespace aoc2016 {
@@ -7,9 +5,16 @@ namespace aoc2016 {
 void
 Scrambler::MovePos(size_t pos1, size_t pos2)
 {
-	char ch = str_[pos1];
-	str_.erase(str_.begin() + pos1);
-	str_.insert(str_.begin() + pos2, ch);
+	if (reverse_) {
+		char ch = str_[pos2];
+		str_.erase(str_.begin() + pos2);
+		str_.insert(str_.begin() + pos1, ch);
+	}
+	else {
+		char ch = str_[pos1];
+		str_.erase(str_.begin() + pos1);
+		str_.insert(str_.begin() + pos2, ch);
+	}
 }
 
 void
@@ -20,8 +25,11 @@ Scrambler::ReversePos(size_t pos1, size_t pos2)
 }
 
 void
-Scrambler::RotateDir(Direction dir, size_t steps)
+Scrambler::RotateDir(Direction dir, size_t steps) noexcept(true)
 {
+	if (reverse_) {
+		dir = (dir == Direction::LEFT) ? Direction::RIGHT : Direction::LEFT;
+	}
 	steps %= str_.length();
 	if (dir == Direction::LEFT) {
 		std::rotate(str_.begin(), str_.begin() + steps, str_.end());
@@ -34,14 +42,40 @@ Scrambler::RotateDir(Direction dir, size_t steps)
 void
 Scrambler::RotateChPos(char letter)
 {
-	size_t steps = str_.find(letter) + 1;
+	size_t steps = str_.find(letter);
 
-	// rotate right
-	if (steps > 4) {
-		++steps;
+	if (reverse_) {
+		// rotate left
+		// pos      rev
+		//	0->1     1->0
+		//	1->3     3->1
+		//	2->5     5->2
+		//	3->7     7->3
+		//	4->10->2 2->4
+		//	5->12->4 4->5
+		//	6->14->6 6->6
+		//	7->16->0 0->7
+
+		//	0->7 = -1
+		//	1->0 = -1
+		//	2->4 = +2
+		//	3->1 = -2
+		//	4->5 = +1
+		//	5->2 = -3
+		//	6->6 = 0
+		//	7->3 = -4
+		steps = steps / 2 + (((steps % 2 == 1) || steps == 0) ? 1 : 5);
+		steps %= str_.length();
+		std::rotate(str_.begin(), str_.begin() + steps, str_.end());
 	}
-	steps %= str_.length();
-	std::rotate(str_.rbegin(), str_.rbegin() + steps, str_.rend());
+	else {
+		// rotate right
+		if (++steps > 4) {
+			++steps;
+		}
+		steps %= str_.length();
+		std::rotate(str_.rbegin(), str_.rbegin() + steps, str_.rend());
+	}
 }
 
 void
