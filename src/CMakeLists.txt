@@ -125,6 +125,11 @@ set(DAY21_SOURCE
 	"${DAY21_DIR}/scrambler.cpp" "${DAY21_DIR}/scrambler.h"
 )
 
+set(DAY22_DIR "${CMAKE_CURRENT_SOURCE_DIR}/day22")
+set(DAY22_SOURCE
+	"${DAY22_DIR}/day22.cpp"
+)
+
 )
 
 set(DAYS_SOURCE
@@ -150,6 +155,7 @@ set(DAYS_SOURCE
 	"${DAY19_SOURCE}"
 	"${DAY20_SOURCE}"
 	"${DAY21_SOURCE}"
+	"${DAY22_SOURCE}"
 )
 add_executable(aoc2016 
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2016.cpp"
