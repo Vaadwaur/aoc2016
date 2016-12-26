@@ -215,9 +215,6 @@ part2(std::istream& _is, std::ostream& _os)
 template<> std::string
 solve<kDay24>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-	if(_part1) {
-		return "";
-	}
 	return std::to_string(_part1 ? part1(_is, _os) : part2(_is, _os));
 }
 
