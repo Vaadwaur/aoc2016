@@ -8,14 +8,12 @@ namespace aoc2016 {
 std::string
 day_to_string(eDay day)
 {
-	static const std::array<std::string, kNUM_DAYS> kDayLookup {
-		"day01", "day02", "day03", "day04", "day05", "day06", "day07",
-		"day08", "day09", "day10", "day11", "day12", "day13", "day14",
-		"day15", "day16", "day17", "day18", "day19", "day20", "day21",
-		"day22", "day23", "day24", "day25"
-	};
+    static const std::array<std::string, kNUM_DAYS> kDayLookup{
+        "day01", "day02", "day03", "day04", "day05", "day06", "day07", "day08", "day09",
+        "day10", "day11", "day12", "day13", "day14", "day15", "day16", "day17", "day18",
+        "day19", "day20", "day21", "day22", "day23", "day24", "day25"};
 
-	return kDayLookup[day];
+    return kDayLookup[day];
 }
 
 extern template std::string solve<kDay01>(bool, std::istream&, std::ostream&);
@@ -44,99 +42,154 @@ extern template std::string solve<kDay23>(bool, std::istream&, std::ostream&);
 extern template std::string solve<kDay24>(bool, std::istream&, std::ostream&);
 extern template std::string solve<kDay25>(bool, std::istream&, std::ostream&);
 
-template<typename T>
+template <typename T>
 class ScopedTimer
 {
-	std::chrono::time_point<std::chrono::high_resolution_clock> start_;
-	uint64_t &time_;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_;
+    uint64_t& time_;
+
 public:
-	ScopedTimer(uint64_t& time) : time_(time), start_(std::chrono::high_resolution_clock::now()) {}
-	~ScopedTimer() { time_ += std::chrono::duration_cast<T>(std::chrono::high_resolution_clock::now() - start_).count(); }
+    ScopedTimer(uint64_t& time) : time_(time), start_(std::chrono::high_resolution_clock::now()) {}
+    ~ScopedTimer()
+    {
+        time_ += std::chrono::duration_cast<T>(std::chrono::high_resolution_clock::now() - start_)
+                     .count();
+    }
 };
 
 uint64_t
 run(eDay day, bool part1, std::ostream& os)
 {
-	std::string filename{ "./input/" + day_to_string(day) + ".txt" };
-	std::ifstream is{filename};
-		
-	std::string(*func)(bool, std::istream&, std::ostream&);
-	switch (day) {
-	case kDay01: func = &solve<kDay01>; break;
-	case kDay02: func = &solve<kDay02>; break;
-	case kDay03: func = &solve<kDay03>; break;
-	case kDay04: func = &solve<kDay04>; break;
-	case kDay05: func = &solve<kDay05>; break;
-	case kDay06: func = &solve<kDay06>; break;
-	case kDay07: func = &solve<kDay07>; break;
-	case kDay08: func = &solve<kDay08>; break;
-	case kDay09: func = &solve<kDay09>; break;
-	case kDay10: func = &solve<kDay10>; break;
-	case kDay11: func = &solve<kDay11>; break;
-	case kDay12: func = &solve<kDay12>; break;
-	case kDay13: func = &solve<kDay13>; break;
-	case kDay14: func = &solve<kDay14>; break;
-	case kDay15: func = &solve<kDay15>; break;
-	case kDay16: func = &solve<kDay16>; break;
-	case kDay17: func = &solve<kDay17>; break;
-	case kDay18: func = &solve<kDay18>; break;
-	case kDay19: func = &solve<kDay19>; break;
-	case kDay20: func = &solve<kDay20>; break;
-	case kDay21: func = &solve<kDay21>; break;
-	case kDay22: func = &solve<kDay22>; break;
-	case kDay23: func = &solve<kDay23>; break;
-	case kDay24: func = &solve<kDay24>; break;
-	case kDay25: func = &solve<kDay25>; break;
-	default:
-		func = nullptr;
-	}
-	uint64_t time{};
-	std::string result;
-	if (func != nullptr) {
-		os << day_to_string(day) << ":part" << (part1 ? '1' : '2') << ':';
-		{
-			ScopedTimer<std::chrono::microseconds> timer(time);
-			result = func(part1, is, os);
-		}
-		os << result << '\n';
-	}
+    std::string filename{"./input/" + day_to_string(day) + ".txt"};
+    std::ifstream is{filename};
 
-	return time;
+    std::string (*func)(bool, std::istream&, std::ostream&);
+    switch (day) {
+        case kDay01:
+            func = &solve<kDay01>;
+            break;
+        case kDay02:
+            func = &solve<kDay02>;
+            break;
+        case kDay03:
+            func = &solve<kDay03>;
+            break;
+        case kDay04:
+            func = &solve<kDay04>;
+            break;
+        case kDay05:
+            func = &solve<kDay05>;
+            break;
+        case kDay06:
+            func = &solve<kDay06>;
+            break;
+        case kDay07:
+            func = &solve<kDay07>;
+            break;
+        case kDay08:
+            func = &solve<kDay08>;
+            break;
+        case kDay09:
+            func = &solve<kDay09>;
+            break;
+        case kDay10:
+            func = &solve<kDay10>;
+            break;
+        case kDay11:
+            func = &solve<kDay11>;
+            break;
+        case kDay12:
+            func = &solve<kDay12>;
+            break;
+        case kDay13:
+            func = &solve<kDay13>;
+            break;
+        case kDay14:
+            func = &solve<kDay14>;
+            break;
+        case kDay15:
+            func = &solve<kDay15>;
+            break;
+        case kDay16:
+            func = &solve<kDay16>;
+            break;
+        case kDay17:
+            func = &solve<kDay17>;
+            break;
+        case kDay18:
+            func = &solve<kDay18>;
+            break;
+        case kDay19:
+            func = &solve<kDay19>;
+            break;
+        case kDay20:
+            func = &solve<kDay20>;
+            break;
+        case kDay21:
+            func = &solve<kDay21>;
+            break;
+        case kDay22:
+            func = &solve<kDay22>;
+            break;
+        case kDay23:
+            func = &solve<kDay23>;
+            break;
+        case kDay24:
+            func = &solve<kDay24>;
+            break;
+        case kDay25:
+            func = &solve<kDay25>;
+            break;
+        default:
+            func = nullptr;
+    }
+    uint64_t time{};
+    std::string result;
+    if (func != nullptr) {
+        os << day_to_string(day) << ":part" << (part1 ? '1' : '2') << ':';
+        {
+            ScopedTimer<std::chrono::microseconds> timer(time);
+            result = func(part1, is, os);
+        }
+        os << result << '\n';
+    }
+
+    return time;
 }
 
-} // namespace aoc2016
+}  // namespace aoc2016
 
 void
 print_duration(std::ostream& _os, uint64_t const microseconds)
 {
-	if (microseconds > 0) {
-		_os << "\tElapsed time:" << microseconds / 1.0e6 << "s\n";
-	}
+    if (microseconds > 0) {
+        _os << "\tElapsed time:" << microseconds / 1.0e6 << "s\n";
+    }
 }
 
 int
 main(int _argc, char** _argv)
 {
-	using namespace aoc2016;
-	std::regex filter{".*"};
-	if (_argc > 1) {
-		filter = std::regex{_argv[1]};
-	}
-	uint64_t total_time{};
-	for(int day{kFIRST_DAY}; day != kNUM_DAYS; ++day) {
-		eDay solver { static_cast<eDay>(day) };
-		if (!std::regex_search(day_to_string(solver), filter)) {
-			continue;
-		}
-		auto duration1 = run(solver, true, std::cout);
-		print_duration(std::cout, duration1);
-		auto duration2 = run(solver, false, std::cout);
-		print_duration(std::cout, duration2);
+    using namespace aoc2016;
+    std::regex filter{".*"};
+    if (_argc > 1) {
+        filter = std::regex{_argv[1]};
+    }
+    uint64_t total_time{};
+    for (int day{kFIRST_DAY}; day != kNUM_DAYS; ++day) {
+        eDay solver{static_cast<eDay>(day)};
+        if (!std::regex_search(day_to_string(solver), filter)) {
+            continue;
+        }
+        auto duration1 = run(solver, true, std::cout);
+        print_duration(std::cout, duration1);
+        auto duration2 = run(solver, false, std::cout);
+        print_duration(std::cout, duration2);
 
-		total_time += duration1 + duration2;
-	}
+        total_time += duration1 + duration2;
+    }
 
-	std::cout << "\nTotal elapsed time:" << total_time / 1.0e6 << "s\n";
+    std::cout << "\nTotal elapsed time:" << total_time / 1.0e6 << "s\n";
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
