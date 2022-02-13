@@ -1,6 +1,7 @@
 #include "assembunny.h"
 #include <cassert>
 #include <string>
+#include <type_traits>
 
 namespace aoc2016::assembunny {
 
@@ -38,7 +39,7 @@ CPU::Execute(tInstructions& program)
             break;
         case Instruction::kToggle: {
             auto target = next + regs[in.op1];
-            if (target >= program.size()) {
+            if (target >= std::make_signed_t<decltype(program.size())>(program.size())) {
                 break;
             }
             auto& target_in = program[target];

@@ -49,7 +49,7 @@ class ScopedTimer
     uint64_t& time_;
 
 public:
-    ScopedTimer(uint64_t& time) : time_(time), start_(std::chrono::high_resolution_clock::now()) {}
+    ScopedTimer(uint64_t& time) : start_(std::chrono::high_resolution_clock::now()), time_(time) {}
     ~ScopedTimer()
     {
         time_ += std::chrono::duration_cast<T>(std::chrono::high_resolution_clock::now() - start_)

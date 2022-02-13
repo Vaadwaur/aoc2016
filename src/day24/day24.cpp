@@ -106,7 +106,7 @@ static auto
 part1(std::istream& _is, std::ostream& _os)
 {
     auto dungeon = get_map(_is);
-    Pos entrance_pos;
+    Pos entrance_pos{};
     rooms_x = static_cast<uint8_t>(dungeon.begin()->size());
     rooms_y = static_cast<uint8_t>(dungeon.size());
     std::vector<Pos> interest_points;
@@ -161,7 +161,7 @@ static auto
 part2(std::istream& _is, std::ostream& _os)
 {
     auto dungeon = get_map(_is);
-    Pos entrance_pos;
+    Pos entrance_pos{};
     rooms_x = static_cast<uint8_t>(dungeon.begin()->size());
     rooms_y = static_cast<uint8_t>(dungeon.size());
     std::vector<Pos> interest_points;

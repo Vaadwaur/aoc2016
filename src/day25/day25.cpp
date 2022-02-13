@@ -1,6 +1,8 @@
 #include <days.h>
 #include <utils/assembunny.h>
 
+#include <type_traits>
+
 namespace aoc2016 {
 
 namespace asmb = assembunny;
@@ -15,17 +17,17 @@ part1(asmb::tInstructions& program)
     {
         // generate expected answer "01010101010101..."
         char out{'0'};
-        for (int i{}; i < output_size; ++i) {
+        for (size_t i{}; i < output_size; ++i) {
             out = (out == '0') ? '1' : '0';
             expected_output += out;
         }
     }
-    auto expected_output2 = expected_output;
+    std::string expected_output2 = expected_output;
     std::rotate(expected_output2.begin(), expected_output2.begin() + 1, expected_output2.end());
 
     asmb::CPU cpu{};
     int reg_a_test_value{};
-    size_t const size = program.size();
+    auto const size = std::make_signed_t<decltype(program.size())>(program.size());
     while (true) {
         cpu.regs = {};
         cpu.regs[0] = reg_a_test_value;

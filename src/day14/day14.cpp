@@ -11,7 +11,8 @@ namespace {
 std::regex const triplet{R"((.)\1\1)", std::regex_constants::optimize};
 std::regex const quintet{R"((.)\1\1\1\1)", std::regex_constants::optimize};
 std::string salt;
-}
+
+}  // anonymous namespace
 
 struct tHashType
 {

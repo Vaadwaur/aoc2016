@@ -12,7 +12,8 @@ constexpr unsigned char const X_SIZE = 4;
 constexpr unsigned char const Y_SIZE = 4;
 std::string input;
 constexpr std::array<char, 4> const PATH_LOOKUP{'U', 'D', 'L', 'R'};
-}
+
+}  // anonymous namespace
 
 using tDoorState = char;
 
@@ -52,10 +53,10 @@ struct Trail
     std::string path;
 };
 
-auto lookup_up = [](Pos pos) -> Pos { return {pos.x, pos.y - 1}; };
-auto lookup_down = [](Pos pos) -> Pos { return {pos.x, pos.y + 1}; };
-auto lookup_left = [](Pos pos) -> Pos { return {pos.x - 1, pos.y}; };
-auto lookup_right = [](Pos pos) -> Pos { return {pos.x + 1, pos.y}; };
+auto lookup_up = [](Pos pos) -> Pos { return {pos.x, static_cast<char>(pos.y - 1)}; };
+auto lookup_down = [](Pos pos) -> Pos { return {pos.x, static_cast<char>(pos.y + 1)}; };
+auto lookup_left = [](Pos pos) -> Pos { return {static_cast<char>(pos.x - 1), pos.y}; };
+auto lookup_right = [](Pos pos) -> Pos { return {static_cast<char>(pos.x + 1), pos.y}; };
 std::array<Pos (*)(Pos), 4> next_pos_lookup{lookup_up, lookup_down, lookup_left, lookup_right};
 
 template <unsigned char X_SIZE, unsigned char Y_SIZE>

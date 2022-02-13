@@ -184,3 +184,6 @@ add_executable(aoc2016
 	"${CMAKE_CURRENT_SOURCE_DIR}/aoc2016.cpp"
 	"${DAYS_SOURCE}"
 )
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()

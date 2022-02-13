@@ -29,7 +29,7 @@ follow_instruction(Direction const dir, std::string const& steps)
     return pos;
 }
 
-static Position
+static void
 follow_instruction(Direction const dir, std::string const& steps, Position& cur_pos,
                    std::set<Position>& visited)
 {

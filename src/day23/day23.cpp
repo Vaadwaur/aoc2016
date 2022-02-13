@@ -11,7 +11,8 @@ part1(asmb::tInstructions& program)
 {
     asmb::CPU cpu{};
     cpu.regs[0] = 7;
-    size_t const size = program.size();
+    // program modifies itself, but it never change size
+    auto const size = std::make_signed_t<decltype(program.size())>(program.size());
     while (cpu.next < size) {
         cpu.Execute(program);
     }
@@ -24,7 +25,8 @@ part2(asmb::tInstructions& program)
 {
     asmb::CPU cpu{};
     cpu.regs[0] = 12;
-    size_t const size = program.size();
+    // program modifies itself, but it never change size
+    auto const size = std::make_signed_t<decltype(program.size())>(program.size());
     while (cpu.next < size) {
         cpu.Execute(program);
     }

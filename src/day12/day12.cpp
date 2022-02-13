@@ -9,7 +9,8 @@ static auto
 part1(asmb::tInstructions const& program)
 {
     asmb::CPU cpu{};
-    while (cpu.next < program.size()) {
+    auto const program_size = std::make_signed_t<decltype(program.size())>(program.size());
+    while (cpu.next < program_size) {
         cpu.Execute(program);
     }
 
@@ -21,7 +22,8 @@ part2(asmb::tInstructions const& program)
 {
     asmb::CPU cpu{};
     cpu.regs[2] = 1;  // set register c
-    while (cpu.next < program.size()) {
+    auto const program_size = std::make_signed_t<decltype(program.size())>(program.size());
+    while (cpu.next < program_size) {
         cpu.Execute(program);
     }
 

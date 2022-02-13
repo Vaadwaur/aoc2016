@@ -10,7 +10,8 @@ enum eRoomType { UNCHECKED = 0xfe, WALL = 0xff };
 constexpr uint8_t const ROOMS_X = 52;
 constexpr uint8_t const ROOMS_Y = 52;
 uint32_t puzzle_input;
-}
+
+}  // anonymous namespace
 
 template <typename T>
 constexpr T
