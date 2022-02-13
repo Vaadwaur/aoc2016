@@ -89,7 +89,7 @@ template <>
 std::string
 solve<kDay03>(bool _part1, std::istream& _is, std::ostream& _os)
 {
-    return std::to_string(_part1 ? part1(_is) : part1(_is));
+    return std::to_string(_part1 ? part1(_is) : part2(_is));
 }
 
 }  // namespace aoc2016
