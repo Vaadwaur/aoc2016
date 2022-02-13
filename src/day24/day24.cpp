@@ -16,8 +16,8 @@ using tDungeonMap = std::vector<std::vector<room_t>>;
 
 }  // anonymous namespace
 
-static constexpr uint32_t
-shortest_path_neighbour(tDungeonMap const& dungeon, int const pos_x, int const pos_y)
+static uint32_t
+shortest_path_neighbour(tDungeonMap const& dungeon, int const pos_x, int const pos_y) noexcept
 {
     room_t min = WALL;
     if (pos_y > 0) {
@@ -99,8 +99,8 @@ struct Pos
 {
     uint8_t x;
     uint8_t y;
-    bool
-    operator<(Pos const& rhs) const
+    constexpr bool
+    operator<(Pos const& rhs) const noexcept
     {
         return y < rhs.y || (y == rhs.y && x < rhs.x);
     }
@@ -149,8 +149,6 @@ part1(std::istream& _is, std::ostream& _os)
             num_steps += path[ip.y][ip.x];
             starting_point = ip;
         }
-        // auto const& last_ip = interest_points.rbegin();
-        // num_steps += path[last_ip.y][last_ip.x];
         ++counter2;
         if (num_steps < best_path) {
             _os << "Counter:" << ++counter << ":" << counter2 << ", steps:" << num_steps << '\n';
@@ -204,8 +202,7 @@ part2(std::istream& _is, std::ostream& _os)
             num_steps += path[ip.y][ip.x];
             starting_point = ip;
         }
-        auto const last_ip = *interest_points.rbegin();
-        num_steps += maps[last_ip][entrance_pos.y][entrance_pos.x];
+        num_steps += maps[entrance_pos][starting_point.y][starting_point.x];
         ++counter2;
         if (num_steps < best_path) {
             _os << "Counter:" << ++counter << ":" << counter2 << ", steps:" << num_steps << '\n';

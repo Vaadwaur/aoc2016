@@ -18,7 +18,7 @@ count_safe_tiles(std::string prev_row, uint64_t const kNumRows)
     // Pad with virtual safe rooms on left and right side.
     // These are removed in the end when counting safe rooms (reduce with kNumRows * 2).
     prev_row.insert(std::begin(prev_row), SAFE);
-    uint8_t const row_len = static_cast<uint8_t const>(prev_row.length());
+    uint8_t const row_len = static_cast<uint8_t>(prev_row.length());
     prev_row += SAFE;
     std::string next_row{prev_row};
 

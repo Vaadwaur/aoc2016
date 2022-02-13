@@ -4,7 +4,7 @@
 namespace aoc2016 {
 
 static uint32_t
-part1(uint32_t const _num_elves)
+part1(uint32_t const _num_elves) noexcept
 {
     // Josephus problem.
     // answer = move highest order bit in num_elves and place it first

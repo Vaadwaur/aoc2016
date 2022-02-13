@@ -18,6 +18,7 @@ part1(std::istream& _is, std::ostream& _os)
         code += digest[5];
         _os << digest[5] << std::flush;
     }
+    _os << "\b\b\b\b\b\b\b\b";
 
     return code;
 }

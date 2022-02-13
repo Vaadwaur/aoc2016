@@ -14,14 +14,14 @@ uint32_t puzzle_input;
 }  // anonymous namespace
 
 template <typename T>
-constexpr T
-square(T const value)
+static constexpr T
+square(T const value) noexcept
 {
     return value * value;
 }
 
 static bool
-is_open_space(uint32_t const pos_x, uint32_t const pos_y)
+is_open_space(uint32_t const pos_x, uint32_t const pos_y) noexcept
 {
     uint32_t result = square(pos_x) + 3 * pos_x + 2 * pos_x * pos_y + pos_y + square(pos_y);
     result += puzzle_input;
@@ -34,7 +34,7 @@ is_open_space(uint32_t const pos_x, uint32_t const pos_y)
 template <uint8_t X, uint8_t Y>
 static constexpr uint32_t
 shortest_path_neighbour(std::array<std::array<uint8_t, X>, Y> const& dungeon, int const pos_x,
-                        int const pos_y)
+                        int const pos_y) noexcept
 {
     static_assert(X < 254, "X size must be less than 254");
     static_assert(Y < 254, "Y size must be less than 254");

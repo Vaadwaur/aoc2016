@@ -40,8 +40,9 @@ struct Pos
 {
     char x;
     char y;
-    bool
-    operator==(Pos const rhs) const
+
+    constexpr bool
+    operator==(Pos const rhs) const noexcept
     {
         return x == rhs.x && y == rhs.y;
     }

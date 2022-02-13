@@ -18,7 +18,8 @@ int max_x;
 int max_y;
 
 using tNodes = std::map<std::pair<int, int>, Node>;
-}
+
+}  // anonymous namespace
 
 static auto
 part1(tNodes const& nodes)
@@ -39,9 +40,9 @@ part1(tNodes const& nodes)
 static auto
 part2(tNodes const& nodes, std::ostream& _os)
 {
-    tNodes::const_iterator node_it;
     bool first{true};
-    int empty_pos_x, empty_pos_y;
+    int empty_pos_x{};
+    int empty_pos_y{};
     _os << "\n   ";
     _os << std::right;
     for (int x{}; x <= max_x; ++x) {
@@ -54,8 +55,7 @@ part2(tNodes const& nodes, std::ostream& _os)
         _os << std::setw(2) << y << ' ';
         for (x = 0; x <= max_x; ++x) {
             _os << ' ';
-            node_it = nodes.find({x, y});
-            if (node_it->second.used == 0) {
+            if (auto node_it = nodes.find({x, y}); node_it->second.used == 0) {
                 _os << '_';
                 empty_pos_x = x;
                 empty_pos_y = y;

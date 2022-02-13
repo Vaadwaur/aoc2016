@@ -35,17 +35,6 @@ private:
 	uint32_t count_[2]{};   // 64bit counter for number of bits (lo, hi)
 	uint32_t state_[4] = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476 };   // digest so far
 	uint8_t digest_[16]; // 128-bit result
-
-					  // low level logic operations
-	static inline uint32_t F(uint32_t x, uint32_t y, uint32_t z);
-	static inline uint32_t G(uint32_t x, uint32_t y, uint32_t z);
-	static inline uint32_t H(uint32_t x, uint32_t y, uint32_t z);
-	static inline uint32_t I(uint32_t x, uint32_t y, uint32_t z);
-	static inline uint32_t rotate_left(uint32_t x, int n);
-	static inline void FF(uint32_t &a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-	static inline void GG(uint32_t &a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-	static inline void HH(uint32_t &a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-	static inline void II(uint32_t &a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
 };
 
 std::string md5(std::string const& str);

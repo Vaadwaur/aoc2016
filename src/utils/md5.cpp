@@ -26,60 +26,60 @@ static constexpr int const S43 = 15;
 static constexpr int const S44 = 21;
 
 // F, G, H and I are basic MD5 functions.
-__forceinline uint32_t
-MD5::F(uint32_t x, uint32_t y, uint32_t z)
+static constexpr uint32_t
+F(uint32_t x, uint32_t y, uint32_t z) noexcept
 {
-    return x & y | ~x & z;
+    return (x & y) | (~x & z);
 }
 
-__forceinline uint32_t
-MD5::G(uint32_t x, uint32_t y, uint32_t z)
+static constexpr uint32_t
+G(uint32_t x, uint32_t y, uint32_t z) noexcept
 {
-    return x & z | y & ~z;
+    return (x & z) | (y & ~z);
 }
 
-__forceinline uint32_t
-MD5::H(uint32_t x, uint32_t y, uint32_t z)
+static constexpr uint32_t
+H(uint32_t x, uint32_t y, uint32_t z) noexcept
 {
     return x ^ y ^ z;
 }
 
-__forceinline uint32_t
-MD5::I(uint32_t x, uint32_t y, uint32_t z)
+static constexpr uint32_t
+I(uint32_t x, uint32_t y, uint32_t z) noexcept
 {
     return y ^ (x | ~z);
 }
 
 // rotate_left rotates x left n bits.
-__forceinline uint32_t
-MD5::rotate_left(uint32_t x, int n)
+static constexpr uint32_t
+rotate_left(uint32_t x, int n) noexcept
 {
-    // return (x << n) | (x >> (32 - n));
-    return _rotl(x, n);
+    return (x << n) | (x >> (32 - n));
+    // return _rotl(x, n);
 }
 
 // FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4.
 // Rotation is separate from addition to prevent recomputation.
-__forceinline void
-MD5::FF(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac)
+static constexpr void
+FF(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) noexcept
 {
     a = rotate_left(a + F(b, c, d) + x + ac, s) + b;
 }
 
-__forceinline void
-MD5::GG(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac)
+static constexpr void
+GG(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) noexcept
 {
     a = rotate_left(a + G(b, c, d) + x + ac, s) + b;
 }
 
-__forceinline void
-MD5::HH(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac)
+static constexpr void
+HH(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) noexcept
 {
     a = rotate_left(a + H(b, c, d) + x + ac, s) + b;
 }
 
-__forceinline void
-MD5::II(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac)
+static constexpr void
+II(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) noexcept
 {
     a = rotate_left(a + I(b, c, d) + x + ac, s) + b;
 }
