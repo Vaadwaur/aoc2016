@@ -64,7 +64,7 @@ scramble(std::vector<std::string> const& instructions, std::string str, bool con
 
 template <>
 std::string
-solve<kDay21>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay21>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     auto instructions = get_instructions(_is);
     if (_part1) {

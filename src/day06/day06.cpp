@@ -59,7 +59,7 @@ part2(std::istream& _is)
 
 template <>
 std::string
-solve<kDay06>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay06>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     return _part1 ? part1(_is) : part2(_is);
 }

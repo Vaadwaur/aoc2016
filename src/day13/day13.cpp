@@ -103,7 +103,7 @@ get_dungeon(uint32_t const start_pos_x, uint32_t const start_pos_y)
 }
 
 static uint8_t
-part1(std::istream& _is, std::ostream& _os)
+part1([[maybe_unused]] std::ostream& _os)
 {
     auto dungeon = get_dungeon<ROOMS_X, ROOMS_Y>(1, 1);
     uint8_t const shortest_path = dungeon[39][31];
@@ -152,7 +152,7 @@ solve<kDay13>(bool _part1, std::istream& _is, std::ostream& _os)
 {
     _is >> puzzle_input;
 
-    return std::to_string(_part1 ? part1(_is, _os) : part2());
+    return std::to_string(_part1 ? part1(_os) : part2());
 }
 
 }  // namespace aoc2016

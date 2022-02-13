@@ -39,7 +39,7 @@ part2(uint32_t const _num_elves)
 
 template <>
 std::string
-solve<kDay19>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay19>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     std::string input;
     _is >> input;

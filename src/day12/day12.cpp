@@ -30,7 +30,7 @@ part2(asmb::tInstructions const& program)
 
 template <>
 std::string
-solve<kDay12>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay12>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     auto program = asmb::load_program(_is);
     return std::to_string(_part1 ? part1(program) : part2(program));

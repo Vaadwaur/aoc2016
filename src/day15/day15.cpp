@@ -60,7 +60,7 @@ read_input(std::istream& _is)
 
 template <>
 std::string
-solve<kDay15>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay15>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     auto discs = read_input(_is);
     return std::to_string(_part1 ? part1(discs) : part2(discs));

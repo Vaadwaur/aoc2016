@@ -79,7 +79,7 @@ get_ranges(std::istream& _is)
 
 template <>
 std::string
-solve<kDay20>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay20>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     auto ranges = get_ranges(_is);
 

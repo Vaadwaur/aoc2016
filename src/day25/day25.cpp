@@ -52,7 +52,7 @@ part1(asmb::tInstructions& program)
 
 template <>
 std::string
-solve<kDay25>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay25>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     using namespace std::string_literals;
 

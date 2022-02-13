@@ -42,7 +42,7 @@ get_data(std::string storage, size_t const storage_size)
 
 template <>
 std::string
-solve<kDay16>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay16>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     std::string storage;
     _is >> storage;

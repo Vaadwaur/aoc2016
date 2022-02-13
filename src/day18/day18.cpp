@@ -8,7 +8,7 @@ enum Symbols : char { SAFE = '.', TRAP = '^' };
 }
 
 static auto
-count_safe_tiles(std::istream& _is, std::string prev_row, uint64_t const kNumRows)
+count_safe_tiles(std::string prev_row, uint64_t const kNumRows)
 {
     // TODO: convert prev_row to binary and use __popcnt intrinsics to speed up
     uint64_t safe_counter{};
@@ -53,12 +53,11 @@ count_safe_tiles(std::istream& _is, std::string prev_row, uint64_t const kNumRow
 
 template <>
 std::string
-solve<kDay18>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay18>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     std::string input;
     _is >> input;
-    return std::to_string(_part1 ? count_safe_tiles(_is, input, 40)
-                                 : count_safe_tiles(_is, input, 400000));
+    return std::to_string(_part1 ? count_safe_tiles(input, 40) : count_safe_tiles(input, 400000));
 }
 
 }  // namespace aoc2016

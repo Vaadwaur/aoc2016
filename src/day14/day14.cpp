@@ -22,7 +22,7 @@ struct tHashType
 };
 
 static auto
-pad_key_index(std::istream& _is, std::ostream& _os, uint16_t const kNumStretches = 0)
+pad_key_index(uint16_t const kNumStretches = 0)
 {
     uint64_t num_confirmed_keys{};
     std::vector<std::pair<uint64_t, std::string>> confirmed_keys;
@@ -100,11 +100,11 @@ pad_key_index(std::istream& _is, std::ostream& _os, uint16_t const kNumStretches
 
 template <>
 std::string
-solve<kDay14>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay14>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     _is >> salt;
 
-    return std::to_string(_part1 ? pad_key_index(_is, _os) : pad_key_index(_is, _os, 2016));
+    return std::to_string(_part1 ? pad_key_index() : pad_key_index(2016));
 }
 
 }  // namespace aoc2016

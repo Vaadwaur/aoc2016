@@ -143,7 +143,7 @@ translate_display(tDisplay display)
 }
 
 static std::string
-part2(std::istream& _is, std::ostream& _os, tDisplay& display)
+part2(std::istream& _is, [[maybe_unused]] std::ostream& _os, tDisplay& display)
 {
     part1(_is, display);
 #ifdef DAY08_DISPLAY_PIXELS

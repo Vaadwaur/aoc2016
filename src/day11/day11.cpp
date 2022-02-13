@@ -26,7 +26,7 @@ get_items(std::istream& _is)
 }
 
 static auto
-get_steps(std::istream& _is, tFloorMap _floor_map)
+get_steps(tFloorMap _floor_map)
 {
     /* my input was 10 items in total
     F4
@@ -48,16 +48,16 @@ get_steps(std::istream& _is, tFloorMap _floor_map)
 
 template <>
 std::string
-solve<kDay11>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay11>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     auto floor_map = get_items(_is);
     size_t answer;
     if (_part1) {
-        answer = get_steps(_is, floor_map);
+        answer = get_steps(floor_map);
     }
     else {
         floor_map[0] += 4;  // found 4 extra items on first floor
-        answer = get_steps(_is, floor_map);
+        answer = get_steps(floor_map);
     }
 
     return std::to_string(answer);

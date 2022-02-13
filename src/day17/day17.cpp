@@ -72,7 +72,7 @@ is_pos_valid(Pos pos)
 }
 
 static auto
-part1(std::string const& input)
+part1()
 {
     constexpr Pos const end_pos{X_SIZE - 1, Y_SIZE - 1};
     Pos next_pos;
@@ -103,7 +103,7 @@ part1(std::string const& input)
 }
 
 static auto
-part2(std::string const& input)
+part2()
 {
     constexpr Pos const end_pos{X_SIZE - 1, Y_SIZE - 1};
     Pos next_pos;
@@ -137,10 +137,10 @@ part2(std::string const& input)
 
 template <>
 std::string
-solve<kDay17>(bool _part1, std::istream& _is, std::ostream& _os)
+solve<kDay17>(bool _part1, std::istream& _is, [[maybe_unused]] std::ostream& _os)
 {
     _is >> input;
-    return _part1 ? part1(input) : std::to_string(part2(input));
+    return _part1 ? part1() : std::to_string(part2());
 }
 
 }  // namespace aoc2016
