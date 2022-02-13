@@ -8,16 +8,18 @@ namespace aoc2016 {
 
 namespace {
 
-enum eRoomType : uint8_t { UNCHECKED = 0xfe, WALL = 0xff };
+using room_t = uint16_t;
+enum eRoomType : room_t { UNCHECKED = 0xfffe, WALL = 0xffff };
 uint8_t rooms_x{};
 uint8_t rooms_y{};
-using tDungeonMap = std::vector<std::vector<uint8_t>>;
-}
+using tDungeonMap = std::vector<std::vector<room_t>>;
+
+}  // anonymous namespace
 
 static constexpr uint32_t
 shortest_path_neighbour(tDungeonMap const& dungeon, int const pos_x, int const pos_y)
 {
-    uint8_t min = WALL;
+    room_t min = WALL;
     if (pos_y > 0) {
         // check row above
         auto test = std::min(dungeon[pos_y - 1][pos_x], min);
@@ -54,7 +56,7 @@ get_path(tDungeonMap dungeon, uint32_t const start_pos_x, uint32_t const start_p
         for (uint8_t y{}; y < rooms_y; ++y) {
             for (uint8_t x{}; x < rooms_x; ++x) {
                 auto room_value = dungeon[y][x];
-                if (room_value < 0xff) {
+                if (room_value < WALL) {
                     auto new_value = shortest_path_neighbour(dungeon, x, y) + 1;
                     if (new_value < room_value) {
                         // count number of rooms with improved score since last run
@@ -74,8 +76,9 @@ get_map(std::istream& _is)
 {
     tDungeonMap dungeon;
     for (std::string line; std::getline(_is, line);) {
-        std::vector<uint8_t> row;
-        for (auto room : line) {
+        std::vector<room_t> row;
+        for (auto value : line) {
+            auto room = static_cast<room_t>(value);
             switch (room) {
                 case '#':
                     room = WALL;
