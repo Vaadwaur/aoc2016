@@ -1,5 +1,7 @@
 #include <days.h>
 
+#include <algorithm>
+
 namespace aoc2016 {
 
 namespace {

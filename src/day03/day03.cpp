@@ -1,5 +1,6 @@
-#include <algorithm>
 #include <days.h>
+
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <vector>

@@ -1,7 +1,8 @@
 #include <days.h>
+#include <utils/md5.h>
+
 #include <memory>
 #include <regex>
-#include <utils/md5.h>
 #include <vector>
 
 namespace aoc2016 {

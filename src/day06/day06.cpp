@@ -1,4 +1,6 @@
 #include <days.h>
+
+#include <algorithm>
 #include <functional>
 #include <utility>
 

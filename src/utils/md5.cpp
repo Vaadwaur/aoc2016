@@ -1,5 +1,6 @@
 #include "md5.h"
 #include <cstdint>
+#include <cstring>
 #include <string>
 
 // reference implemantion of RFC 1321

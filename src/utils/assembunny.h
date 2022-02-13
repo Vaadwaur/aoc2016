@@ -1,4 +1,5 @@
 #include <array>
+#include <iosfwd>
 #include <vector>
 
 namespace aoc2016::assembunny {

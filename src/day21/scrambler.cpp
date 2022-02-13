@@ -1,5 +1,7 @@
 #include "scrambler.h"
 
+#include <algorithm>
+
 namespace aoc2016 {
 
 void

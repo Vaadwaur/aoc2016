@@ -1,6 +1,7 @@
 #include <days.h>
 #include <utils/assembunny.h>
 
+#include <algorithm>
 #include <type_traits>
 
 namespace aoc2016 {

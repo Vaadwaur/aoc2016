@@ -1,5 +1,6 @@
 #include "assembunny.h"
 #include <cassert>
+#include <fstream>
 #include <string>
 #include <type_traits>
 
