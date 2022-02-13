@@ -61,7 +61,7 @@ solve<kDay25>(bool _part1, std::istream& _is, std::ostream& _os)
         return std::to_string(part1(program));
     }
 
-    return "There is not part2 for day25."s;
+    return "There is no part2 for day25."s;
 }
 
 }  // namespace aoc2016
