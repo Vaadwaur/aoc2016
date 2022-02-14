@@ -186,4 +186,6 @@ add_executable(aoc2016
 )
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+else()
+	target_compile_options(aoc2016 PRIVATE "-march=native")
 endif()

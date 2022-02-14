@@ -46,7 +46,7 @@ pad_key_index(uint16_t const kNumStretches = 0)
             if (std::regex_search(cur_hash, matches, quintet)) {
                 match = matches[1].first[0];
 
-                for (int counter{0}; counter < kStorageSize; ++counter) {
+                for (uint64_t counter{0}; counter < kStorageSize; ++counter) {
                     uint64_t i = (index + counter) % kStorageSize;
                     if (triplet_hashes[i].used == false &&
                         (triplet_hashes[i].index >= (index - 1000)) &&

@@ -1,6 +1,13 @@
-#include <array>
 #include <days.h>
+
+#ifdef _MSC_VER
 #include <intrin.h>
+#define __builtin_popcount __popcnt
+#else
+#include <x86intrin.h>
+#endif
+
+#include <array>
 
 namespace aoc2016 {
 
@@ -25,7 +32,7 @@ is_open_space(uint32_t const pos_x, uint32_t const pos_y) noexcept
 {
     uint32_t result = square(pos_x) + 3 * pos_x + 2 * pos_x * pos_y + pos_y + square(pos_y);
     result += puzzle_input;
-    uint32_t num_bits_set = __popcnt(result);
+    uint32_t num_bits_set = __builtin_popcount(result);
 
     // odd number == wall, even number == open space
     return (num_bits_set & 1) == 0;
@@ -72,7 +79,7 @@ get_dungeon(uint32_t const start_pos_x, uint32_t const start_pos_y)
     static_assert(Y < 254, "Y size must be less than 254");
 
     // set layout of dungeon
-    std::array<std::array<uint8_t, X>, Y> dungeon;
+    std::array<std::array<uint8_t, X>, Y> dungeon{};
     for (uint8_t y{}; y < ROOMS_Y; ++y) {
         for (uint8_t x{}; x < ROOMS_X; ++x) {
             dungeon[y][x] = is_open_space(x, y) ? UNCHECKED : WALL;
@@ -89,7 +96,7 @@ get_dungeon(uint32_t const start_pos_x, uint32_t const start_pos_y)
             for (uint8_t x{}; x < ROOMS_X; ++x) {
                 auto room_value = dungeon[y][x];
                 if (room_value < 0xff) {
-                    auto new_value = shortest_path_neighbour(dungeon, x, y) + 1;
+                    auto new_value = shortest_path_neighbour<X, Y>(dungeon, x, y) + 1;
                     if (new_value < room_value) {
                         // count number of rooms with improved score since last run
                         ++counter;

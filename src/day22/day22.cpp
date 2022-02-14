@@ -13,7 +13,7 @@ struct Node
     uint64_t used;
 };
 
-int smallest_node_size;
+unsigned long long smallest_node_size;
 int max_x;
 int max_y;
 
@@ -107,7 +107,7 @@ get_input(std::istream& _is)
         std::stringstream ss{line};
         ss >> word;
         ss >> word;
-        auto size = std::stoi(word);
+        auto size = std::stoull(word);
         smallest_node_size = std::min(smallest_node_size, size);
         ss >> word;
         auto used = std::stoull(word);
